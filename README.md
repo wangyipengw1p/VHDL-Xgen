@@ -8,7 +8,13 @@ VHDL auto generation tool, Targetting Synchronous, Top-down design flow. Support
 vxgen <func> {<args>}
 ```
 
-  \<func\>: [`gen`]() [`add`]() [`top`]() [`tb`]() [`pkg`]() [`clear`]() [`version`]()
+* [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation-from-templete)
+* [add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components)
+* [top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen) 
+* [tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen) 
+* [pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen) 
+* [clear](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#clear)
+* [version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
 ## Function
 >  If not specified:
 > * \<folder\> will be the current folder.
