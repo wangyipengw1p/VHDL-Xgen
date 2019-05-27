@@ -24,9 +24,9 @@ vxgen <func> {<args>}
 > * reset will be synchronous.
 ### Generation from templete
 ``` 
-vxgen gen <entityname> {-f <folder>}
+vxgen gen <entityname> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} {-f <folder>}
 ```
-Generate the templete ```.vhd``` file based on ```<VXGEN-PATH>/templete/title.conf``` and ```libaray.conf```
+Generate the templete ```.vhd``` file based on ```<VXGEN-PATH>/conf/title.conf``` and ```libaray.conf```
   - Comment in .conf using '**#**' if you don't want to generate the items and libraries in the vhd file.
   - remember to add a ```<space>``` behind item name to assign content. 
   - Time will be auto completed. If ```Engineer``` is not specified vxgen will use <usrname>.
