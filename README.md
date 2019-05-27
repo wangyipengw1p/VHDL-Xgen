@@ -95,7 +95,7 @@ Generated pkg named &lt;pkg_name&gt; (default "pkg"). If -a is specified, all fi
 ```
 vxgen clear {-f <folder>}
 ```
-The tool till generate log and some mark commented at the first line of each file. Clear them using this command. Note that after this command the behaviour of the tool is not guaranteed. So make sure that you finish the creation process before running this command.
+The tool till generate log and some mark commented at the first line of each file. Clear them using this command. Note that **after this command, the behaviour of vxgen is not predictable.** So make sure that you finish the creation process before running this command.
 
 ### Version
 ```
