@@ -1,7 +1,8 @@
 # VHDL-Xgen
+```Still developing```
 VHDL auto generation tool, Targetting Synchronous, Top-down design flow. Support only one entity per file.
 
-```Still developing```
+
 
 ## Usage
 ```
