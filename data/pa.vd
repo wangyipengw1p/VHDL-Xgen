@@ -1,0 +1,8 @@
+process(clk,rst)
+begin
+    if rst = '0' then
+    	
+    elsif rising_edge(clk) then
+	
+    end if;
+end process;
