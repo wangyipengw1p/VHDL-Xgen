@@ -28,9 +28,9 @@ Add components to existing vhd file.  ```<component-name> {<args>}``` could be:
  
 | component | description |
 |  :-: | ------------- |
-| counter | counter named "count<countNum>" is added to <filename>, which will count from 1 to <countNum> and reset to 0. |
-| divclk | divided the clk by <div> and named the out put clk like "clk1" "clk2" etc. |
-| FSM | Create the FSM with <#states> states. "moore" will let the FSM be moore-typed, otherwise it'll be mealy-typed. |
+| counter | counter named "count&lt;countNum&gt;" is added to &lt;filename&gt;, which will count from 1 to &lt;countNum&gt; and reset to 0. |
+| divclk | divided the clk by &lt;div&gt; and named the out put clk like "clk1" "clk2" etc. |
+| FSM | Create the FSM with &lt;#states&gt; states. "moore" will let the FSM be moore-typed, otherwise it'll be mealy-typed. |
 | reg | Create reg as indicated by -p(positive triggered) -n(negative triggered) -a(asynchronous reset) -s(sync reset). |
 | &lt;lib-filename&gt; | copy the entity in the lib , include and auto-connect them in the &lt;filename&gt;. if -n is specified the tool will not do the auto connection. |
   
@@ -39,8 +39,8 @@ Add components to existing vhd file.  ```<component-name> {<args>}``` could be:
 vxgen top {-n <topName>} {-og} {-f <folder>}
 ```
 Auto generation & connection for Top entities. 
-First the tool will find generate the framwork of the top entity named by &lt;topName&gt;(default "TOP"). If "-og" is specified, only generation will be done. Otherwise, the tool will find first in the <folder>(default current folder) for the file named "*_TOP.conf". And connect the port as indicated in the file. If no such file, the tool will include all entities, whose name does not include **'_'**(underline) connect the the port with same name **(recommand)**, and only generate the signal for the ports left, which means that they are not connected.
-If there's already been a file named "*_TOP.vhd", the tool will only do the auto connection work.
+First the tool will find generate the framwork of the top entity named by &lt;topName&gt;(default "TOP"). If "-og" is specified, only generation will be done. Otherwise, the tool will find first in the <folder>(default current folder) for the file named "_TOP.conf". And connect the port as indicated in the file. If no such file, the tool will include all entities, whose name does not include '&apos;	_&apos;	(underline) connect the the port with same name **(recommand)**, and only generate the signal for the ports left, which means that they are not connected.
+If there's already been a file named "_TOP.vhd", the tool will only do the auto connection work.
 **It's recommand to name all clock as "clk" and connect disired clk manually after auto connection. Other logics should be added manually.**
 
 ### Testbench gen
