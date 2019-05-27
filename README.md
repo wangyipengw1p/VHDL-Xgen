@@ -26,7 +26,7 @@ Add components to existing vhd file.
   - ```To be filled```
   
  
-### Top
+### Top gen
 ```
 vxgen top {-n <topName>} {-m <mode>} {-f <folder>}
 ```
