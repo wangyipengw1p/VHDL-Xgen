@@ -21,7 +21,8 @@ vxgen <func> {<args>}
 > * \<folder\> will be the current folder.
 > * Auto-connect will connect the port with the same name.
 > * \<filename\> is treated equally with \<entityname\>.
-> * reset will be synchronous.
+> * register will be positive triggered
+> * reset will be synchoronous negative-rst.
 ### Generation
 ``` 
 vxgen gen <entityname> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} {-f <folder>}
