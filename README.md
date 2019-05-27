@@ -22,7 +22,7 @@ Add components to existing vhd file.
 -  ```<component-name> {<args>}``` could be:
   - ```counter <countNum>```
   - ```divclk <div>```
-  - ```<filename> <whether_auto_connect>```
+  - ```<filename> {<whether_auto_connect>}```
   - ```To be filled```
   
  
