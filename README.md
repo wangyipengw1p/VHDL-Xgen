@@ -9,7 +9,7 @@ VHDL auto generation tool, Targetting Synchronous, Top-down design flow. Support
 vxgen <func> {<args>}
 ```
 
-* [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation-from-templete)
+* [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)
 * [add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components)
 * [top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen) 
 * [tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen) 
@@ -22,7 +22,7 @@ vxgen <func> {<args>}
 > * Auto-connect will connect the port with the same name.
 > * \<filename\> is treated equally with \<entityname\>.
 > * reset will be synchronous.
-### Generation from templete
+### Generation
 ``` 
 vxgen gen <entityname> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} {-f <folder>}
 ```
@@ -30,6 +30,7 @@ Generate the templete ```.vhd``` file based on ```<VXGEN-PATH>/conf/title.conf``
   - Comment in .conf using '**#**' if you don't want to generate the items and libraries in the vhd file.
   - remember to add a ```<space>``` behind item name to assign content. 
   - Time will be auto completed. If ```Engineer``` is not specified vxgen will use <usrname>.
+  - If \<width\> is not specified?
   
 ### Add components
 ```
