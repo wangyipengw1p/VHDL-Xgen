@@ -20,6 +20,7 @@ vxgen <func> {<args>}
 > * \<folder\> will be the current folder.
 > * Auto-connect will connect the port with the same name.
 > * \<filename\> is treated equally with \<entityname\>.
+> * reset will be synchronous.
 ### Generation from templete
 ``` 
 vxgen gen <entityname> {-f <folder>}
