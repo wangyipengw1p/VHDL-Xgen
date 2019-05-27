@@ -7,13 +7,8 @@ VHDL auto generation tool, Targetting Synchronous, Top-down design flow. Support
 ```
 vxgen <func> {<args>}
 ```
-> gen
-> add
-> top
-> tb
-> pkg
-> clear
-> version
+
+  \<func\>: [`gen`]() [`add`]() [`top`]() [`tb`]() [`pkg`]() [`clear`]() [`version`]()
 ## Function
 >  If not specified:
 > * \<folder\> will be the current folder.
