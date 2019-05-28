@@ -32,6 +32,7 @@ Generate the templete ```.vhd``` file based on ```<VXGEN-PATH>/conf/title.conf``
   - remember to add a ```<space>``` behind item name to assign content. 
   - `Time``Platform`will be auto completed. If ```Engineer``` is not specified vxgen will use <usrname>.
   - If \<width\> is not specified, default value is 1
+
 **example of usage**
 ```
 vxgen gen test -i clk rst data 8 -o data_out 16
