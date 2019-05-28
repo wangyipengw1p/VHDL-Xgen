@@ -189,7 +189,7 @@ def generation(arg):
 	entityname = arg.pop(0)
 	if '-f' in arg:
 		filepath = arg.pop(arg.index('-f')+1)
-		arg.pop[arg.index('-f')]
+		arg.pop(arg.index('-f'))
 	else:
 		filepath = os.getcwd()
 	
