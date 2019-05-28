@@ -30,13 +30,14 @@ vxgen gen <entityname> {-i <name> <width> ...} {-o <name> <width> ...} {-io <nam
 Generate the templete ```.vhd``` file based on ```<VXGEN-PATH>/conf/title.conf``` and ```libaray.conf```
   - Comment in .conf using '**#**' if you don't want to generate the items and libraries in the vhd file.
   - remember to add a ```<space>``` behind item name to assign content. 
-  - `Time``Platform`will be auto completed. If ```Engineer``` is not specified vxgen will use <usrname>.
+  - `Time` `Platform`will be auto completed. If ```Engineer``` is not specified vxgen will use <usrname>.
   - If \<width\> is not specified, default value is 1
 
 **example of usage**
 ```
 vxgen gen test -i clk rst data 8 -o data_out 16
 vxgen gen test -i clk -o data 8 -i rst -io bus 16
+vxgen gen test -f ~/work-dir -i clk rst -o output
 vxgen gen test
 ```
   
