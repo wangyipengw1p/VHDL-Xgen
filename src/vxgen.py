@@ -174,7 +174,9 @@ def addports(writefile, arg):
 				datapt = datapt + 1
 	if flag == 1:
 		data[datapt - 1] = data[datapt - 1]+'\t: in\tstd_logic;\n'
-	data[datapt - 1] = data[datapt - 1][:-2] + '\n' #delete last ;
+
+	if not len(pi) == 0 and len(po) == 0 and len(pio) == 0:
+		data[datapt - 1] = data[datapt - 1][:-2] + '\n' #delete last ;
 	
 	with open(writefile, 'w') as file:
 		for line in data:
