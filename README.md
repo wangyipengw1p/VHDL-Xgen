@@ -59,6 +59,7 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 
 *Script will be generated in \<filename\> for counter, clk_div, fsm and reg.
 *Remember to name the \<component\> with '_' to indicate that it's not the first level entity.
+
 **example of usage**
 ```
 vxgen add test.vhd counter 200 4    #add two counters, 'test.vhd' is also accepted
