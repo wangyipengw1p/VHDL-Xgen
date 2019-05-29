@@ -1,0 +1,3 @@
+-- signals for clk div #div
+signal $name, $name_n : std_logic;
+signal div#divcount:unsigned(#width downto 0);

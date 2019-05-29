@@ -1,0 +1,18 @@
+
+-- FSM
+FSM_reg:process(clk,rst)
+begin
+    if rising_edge(clk) then
+        if rst = '0' then 
+			current_state <= $default_state;		
+        else 
+			current_state <= next_state;
+        end if;
+    end if;
+end process;
+
+FSM_comb:process(current_state)
+begin
+	next_state <= current_state;
+	case current_state is
+

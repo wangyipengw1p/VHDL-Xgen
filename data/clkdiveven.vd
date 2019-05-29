@@ -1,0 +1,23 @@
+
+-- clk div#div
+counter_reg_clkdiv#div:process(clk,rst)
+begin
+    if rising_edge(clk) then
+        if rst = '0' then 
+            div#divcount <= (others => '0');
+			$name <= '0';
+        else 
+			div#divcount <= div#divcount + 1;
+			if div#divcount = #div then 
+				div#divcount <= to_unsigned(1,#width); 
+				$name <= $name_n;
+			end if;
+        end if;
+    end if;
+end process;
+comb_clkdiv#div:process(div#divcount, $name)
+begin
+	$name_n <= $name;
+	if div#divcount = #div then  $name_n <= not $name; end if;
+end process;
+

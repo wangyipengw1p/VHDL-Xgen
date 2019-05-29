@@ -1,0 +1,36 @@
+
+-- clk div #div
+p_reg_clkdiv#div:process(clk,rst)
+begin
+    if rising_edge(clk) then
+        if rst = '0' then 
+            div#divcount <= (others => '0');
+			div#div_clkp <= '0';
+        else 
+			div#div_clkp <= div#div_clkp_n;
+			div#divcount <= div#divcount + 1;
+			if div#divcount = #div then div#divcount <= to_unsigned(1,#width); end if;
+        end if;
+    end if;
+end process;
+n_reg_clkdiv#div:process(clk,rst)
+begin
+    if falling_edge(clk) then
+        if rst = '0' then 
+            div#div_clkn <= '0';
+        else 
+			div#div_clkn <= div#div_clkn_n;
+        end if;
+    end if;
+end process;
+
+comb:process(div#div_clkn, div#div_clkp, div#divcount)
+begin
+	div#div_clkn_n <= div#div_clkn;
+	div#div_clkp_n <= div#div_clkp;
+	if div#divcount = #div then div#div_clkp_n <= not div#div_clkp; end if;
+	if div#divcount = (#div - 1) / 2 then div#div_clkn_n <= not div#div_clkn; end if;
+end process;
+
+$name <= div#div_clkp xor div#div_clkn;
+

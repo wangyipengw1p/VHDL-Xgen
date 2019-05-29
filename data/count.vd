@@ -1,0 +1,13 @@
+-- counter #count_num
+process(clk,rst)
+begin
+    if rising_edge(clk) then
+        if rst = '0' then 
+            $count_name <= (others => '0');
+        else 
+			$count_name <= count + 1;
+	    if $count_name = #count_num then $count_name <= to_unsigned(1, #count_width); end if;
+        end if;
+    end if;
+end process;
+
