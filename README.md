@@ -1,5 +1,8 @@
 # VHDL-Xgen
+[![build status](https://img.shields.io/badge/build-none-yellow.svg)](https://img.shields.io/badge/build-none-yellow.svg)
+
 ```Still developing```
+
 VHDL auto generation tool, Targetting Synchronous, Top-down design flow. Support only one entity per file.
 
 
