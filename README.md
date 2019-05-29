@@ -52,13 +52,25 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 | component | description |
 |  :-: | ------------- |
 | counter | Counter named "count&lt;countNum&gt;" is added to &lt;filename&gt;, which will count from 1 to &lt;countNum&gt; and reset to 0. |
-| div_clk | Divided the clk by &lt;div&gt; and named the out put clk like "clk1" "clk2" etc. |
+| div_clk | Divided the clk by &lt;div&gt; and named the out put clk like "clkd_10" "clkd_3" etc. |
 | FSM | Create the FSM framwork. \<args\> can be one number, where states like s0 s1 ... will be generated. One can also specify state names in \<args\> |
 | reg | Create reg framework as indicated by ps(positive triggered,sync reset) na(negative triggered,asynchronous reset) pa ns. Default ps |
 | \<component\> | The tool will check first in the current folder for the component and add. If not exists, the tool will then find in lib. if -n is specified, the tool will not do the auto instantiation and connection. |
 
 *Script will be generated in \<filename\> for counter, clk_div, fsm and reg.
 *Remember to name the \<component\> with '_' to indicate that it's not the first level entity.
+**example of usage**
+```
+vxgen add test.vhd counter 200 4    #add two counters, 'test.vhd' is also accepted
+vxgen add test div_clk 3 20         #add a even div clk and a odd div clk
+vxgen add test fsm 5
+vxgen add test fsm  idle work play study
+vxgen add test reg
+vxgen add test reg ps na            # add two regs
+vxgen add test testcomponent        # add component from current folder
+vxgen add test binary_to_sg.vhd     # add component from lib, vhd file will be copied; 'binary_to_sg.vhd' is also accepted 
+```
+
   
 ### Top gen
 ```
