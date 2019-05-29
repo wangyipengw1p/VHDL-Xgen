@@ -49,10 +49,10 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 | component | description |
 |  :-: | ------------- |
 | counter | Counter named "count&lt;countNum&gt;" is added to &lt;filename&gt;, which will count from 1 to &lt;countNum&gt; and reset to 0. |
-| div_clk | `Lib`Divided the clk by &lt;div&gt; and named the out put clk like "clk1" "clk2" etc. |
+| div_clk | Divided the clk by &lt;div&gt; and named the out put clk like "clk1" "clk2" etc. |
 | FSM | Create the FSM with &lt;#states&gt; states. "moore" will let the FSM be moore-typed, otherwise it'll be mealy-typed. |
 | reg | Create reg as indicated by -p(positive triggered) -n(negative triggered) -a(asynchronous reset) -s(sync reset). |
-| &lt;lib-name&gt; | Copy the entity in the lib , include and auto-connect them in the &lt;filename&gt;. if -n is specified the tool will not do the auto connection. |
+| \<component\> | The tool will check first in the current folder for the component and add. If not exists, the tool will then find in lib. if -n is specified the tool will not do the auto connection. |
   
 ### Top gen
 ```
