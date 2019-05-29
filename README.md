@@ -51,7 +51,7 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 | counter | Counter named "count&lt;countNum&gt;" is added to &lt;filename&gt;, which will count from 1 to &lt;countNum&gt; and reset to 0. |
 | div_clk | Divided the clk by &lt;div&gt; and named the out put clk like "clk1" "clk2" etc. |
 | FSM | Create the FSM framwork. \<args\> can be one number, where states like s0 s1 ... will be generated. One can also specify state names in \<args\> |
-| reg | Create reg as indicated by -p(positive triggered) -n(negative triggered) -a(asynchronous reset) -s(sync reset). |
+| reg | Create reg framework as indicated by ps(positive triggered,sync reset) na(negative triggered,asynchronous reset) pa ns. Default ps |
 | \<component\> | The tool will check first in the current folder for the component and add. If not exists, the tool will then find in lib. if -n is specified the tool will not do the auto connection. |
   
 ### Top gen
