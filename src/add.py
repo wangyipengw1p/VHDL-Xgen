@@ -201,15 +201,19 @@ def getPorts(data):
 	ports = {}
 	for line in data:
 		line =  line.split('--',1)[0] #omit the comments
-		if ':' in line:
-			name.append(line.split(':')[0].strip())
+		if (not 'generic'in line) and ':' in line:
+			names = line.split(':')[0].split(',') #deal with multiple ports in one line
+			for item in names:
+				name.append(item.strip())
+			
 			str2 = line.split(':')[1]
 			if 'downto' in str2:
-				width.append(int(int(filter(str.isdigit,str2.split('downto')[0])) + 1))		#e.g. (7 downto 0) -->  8
+				for item in names:
+					width.append(int(int(filter(str.isdigit,str2.split('downto')[0])) + 1))		#e.g. (7 downto 0) -->  8
 			else:
-				width.append(1)
-	if len(name) == 0:
-		print('Warning: Master file or component has no ports.')
+				for item in names:
+					width.append(1)
+	
 		
 	for i in range(len(name)):
 		ports[name[i]] = width[i]
@@ -221,16 +225,29 @@ def getSignals(data):
 	sig = {}
 	for line in data:
 		if 'signal ' in line:
-			signals.append(line.split('signal')[1].split(':')[0].strip())
+			signames = line.split('signal')[1].split(':')[0].split(',')    #deal with multiple ports in one line
+			for item in signames:
+				signals.append(item.strip())
 			str2 = line.split(':')[1]
 			if 'downto' in str2:
-				width.append(int(int(filter(str.isdigit,str2.split('downto')[0])) + 1))		#e.g. (7 downto 0) -->  8
+				for item in signames:
+					width.append(int(int(filter(str.isdigit,str2.split('downto')[0])) + 1))		#e.g. (7 downto 0) -->  8
 			else:
-				width.append(1)
+				for item in signames:
+					width.append(1)
 	for i in range(len(signals)):
 		sig[signals[i]] = width[i]
 	return sig
-
+#ENTITY PGAND2 IS
+#    GENERIC (    trise : TIME := 1 ns;
+#              tfall : TIME := 1 ns ) ;
+#       PORT (    a1 : IN STD_LOGIC ;
+#             a0 : IN STD_LOGIC ;
+#             z0 : OUT STD_LOGIC );
+#END ENTITY PGAND2;
+#GENERIC MAP (n =>5)
+#      PORT MAP (a(0)=>d3,a(1)=>d4,a(2)=>d5,
+#                           a(3)=>d6,a(4)=>d7, c=>q2);
 
 def addcomponent(writefile, componentf, auto):
 	with open(writefile, 'r') as file:
@@ -254,13 +271,11 @@ def addcomponent(writefile, componentf, auto):
 		data.insert(pt, line)
 		pt = pt + 1
 
-	ptbb = findArchBegin(data)
-	ptb = ptbb + 1
+	
 	# write port map
 	if auto:
 		
-		data.insert(ptb, 'inst_' + componentName + ': port map(\n')
-		ptb  = ptb + 1
+		
 		signalsToRename = []
 		signalsToAdd = []
 		for port in cportsDic:
@@ -273,7 +288,10 @@ def addcomponent(writefile, componentf, auto):
 					signalsToRename.append(port)
 			else:
 				signalsToAdd.append(port)
-			
+		ptb  = findArchBegin(data) + 1
+		ptbb = findArchBegin(data)
+		data.insert(ptb, 'inst_' + componentName + ': port map(\n')
+		ptb = ptb+1
 		for port in cportsDic:
 			if port in signalsToRename:
 				# if the component has been added before, or the name confilicts with the exist signal, 
@@ -288,9 +306,11 @@ def addcomponent(writefile, componentf, auto):
 				if sigwidth == 1:
 					data.insert(ptbb, 'signal ' + rename +': std_logic;\n')
 					ptbb = ptbb + 1
+					ptb = ptb + 1			####!!!
 				else:
 					data.insert(ptbb, 'signal ' + rename +': std_logic_vector('+ str(sigwidth-1) +' downto 0);\n')
 					ptbb = ptbb + 1
+					ptb = ptb + 1
 			else:
 				data.insert(ptb, '\t'+ port +'\t=> '+port+',\n')
 				ptb = ptb + 1

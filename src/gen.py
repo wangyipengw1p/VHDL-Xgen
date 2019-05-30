@@ -45,7 +45,7 @@ def writeframe(writefile, entityname):
 				line = line.strip()
 				if line[0] != '#':
 					file.write( line+ '\n')
-		file.write('\nentity ' + entityname + ' is\n' + 'port(\n);\n\n')
+		file.write('\nentity ' + entityname + ' is\n' + 'port(\n);\nend entity;\n\n')
 		file.write('architecture behaviral of '+ entityname + ' is\n\n' + 'begin\n\n' + 'end architecture;')
 
 
@@ -63,7 +63,7 @@ def addports(writefile, arg):
 			elif item == '-io':
 				pstate = 3
 			else:
-				print("Error arguments!\nUsage:vxgen gen <entityname> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} {-f <folder>}")
+				print("Error: arguments error while adding ports!Please check the command\n")
 				exit(1)
 		elif pstate == 1:
 			if item == '-i':
@@ -104,7 +104,7 @@ def addports(writefile, arg):
 	for item in pi:
 		if flag == 0:
 			if item.isdigit():
-				print("Error arguments!\nUsage:vxgen gen <entityname> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} {-f <folder>}")
+				print("Error: arguments error while adding ports! Please check the command\n")
 				exit(1)
 			else:
 				data.insert(datapt, '\t' + item)
@@ -129,7 +129,7 @@ def addports(writefile, arg):
 	for item in po:
 		if flag == 0:
 			if item.isdigit():
-				print("Error arguments!\nUsage:vxgen gen <entityname> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} {-f <folder>}")
+				print("Error: arguments error while adding ports! Please check the command\n")
 				exit(1)
 			else:
 				data.insert(datapt, '\t' + item)
@@ -154,7 +154,7 @@ def addports(writefile, arg):
 	for item in pio:
 		if flag == 0:
 			if item.isdigit():
-				print("Error arguments!\nUsage:vxgen gen <entityname> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} {-f <folder>}")
+				print("Error: arguments error while adding ports! Please check the command\n")
 				exit(1)
 			else:
 				data.insert(datapt, '\t' + item)
