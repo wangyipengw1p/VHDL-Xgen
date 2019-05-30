@@ -100,15 +100,15 @@ vxgen top toptop.vhd -c entity1 entity2.vhd -i clk rst -o data  #you can choose 
 Generate the top named '<currend-folder>_TOP.vhd', add all vhd entities in folder as component and do the auto connection
   
 ```
-vxgen top                     #easy      
+vxgen top                               #easy      
 ```
 
 Generate the top named 'proj_TOP.vhd', specify the ports, add entities in the folder other than sub_component1 sub_component2 and do not do the auto connection
 
 ```
-vxgen top proj_TOP -i clk rst -o d_out -i d_in -u sub_component1 sub_component2 -n    #declear io anywhere
+vxgen top proj_TOP -i clk rst -o d_out -i d_in -u sub_component1 sub_component2 -n              #declear io anywhere
 ```
-* Do not command -u -c -n more than once. It'll raise error!
+*Do not command -u -c -n more than once. It'll raise error!*
 
 ### Testbench gen
 ```
