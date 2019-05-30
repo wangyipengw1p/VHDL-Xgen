@@ -112,16 +112,16 @@ vxgen top proj_TOP -i clk rst -o d_out -i d_in -u sub_component1 sub_component2 
 
 ### Testbench gen
 ```
-vxgen tb <entityname> {<clkFrequency>} {-d <dutycycle>} {-pn} {-pr} {-rt <rst-time>}
+vxgen tb <entityname> {-q <clkFrequency>} {-d <dutycycle>} {-diff} {-pr/-nr} {-rt <rst-time>}
 ```
 
 args | discription
 :-: | --
 \<entityname\> | name
-{\<clkFrequency\>} | Unit: MHz. Default: 100MHz
+{-q \<clkFrequency\>} | Unit: MHz. Default: 100MHz
 {-d \<dutycycle\>} | Unit: %. Default: 50%
 {-pn} | Diffrencial clk. Name: "clkn" "clkp"
-{-pr} | Positive reset. Default: neg-reset
+{-pr/-nr} | Positive reset/ negative reset. **Default: neg-reset**
 {-rt \<rst-time\>} | Unit: ns; Default: 1 clk cycle
   
 Generate the testbench for specific entity. clock is created named "clk", whose frequency is set to &lt;clkFrequency&gt; MHz (default 100MHz). If -d is specified, the clk dutycycle is set to &lt;dutucycle&gt; (default 50%). If -pn is specified, differencial clk will be generated and named "clkp" and clkn". Reset is auto generated named "rst". If -pr is specified, it will be positive reset, otherwise, default setting is negative reset. Reset will last for &lt;rst-time&gt; (default one clk cycle), and inverted.
@@ -134,7 +134,7 @@ vxgen tb test                     # easy
 ```
 generated tb_test.vhd and 50Mhz differencial clk with 25% duty cycle, rst <= '0', '1' after 20 ns
 ```
-vxgen tb test.vhd 50 -d 25 -pn -rt 20    
+vxgen tb test.vhd -q 50 -d 25 -diff -rt 20    
 ```
   
 ### Package gen
