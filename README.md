@@ -122,9 +122,20 @@ args | discription
 {-d \<dutycycle\>} | Unit: %. Default: 50%
 {-pn} | Diffrencial clk. Name: "clkn" "clkp"
 {-pr} | Positive reset. Default: neg-reset
-{-rt \<rst-time\>} | Default: 1 clk cycle
+{-rt \<rst-time\>} | Unit: ns; Default: 1 clk cycle
   
 Generate the testbench for specific entity. clock is created named "clk", whose frequency is set to &lt;clkFrequency&gt; MHz (default 100MHz). If -d is specified, the clk dutycycle is set to &lt;dutucycle&gt; (default 50%). If -pn is specified, differencial clk will be generated and named "clkp" and clkn". Reset is auto generated named "rst". If -pr is specified, it will be positive reset, otherwise, default setting is negative reset. Reset will last for &lt;rst-time&gt; (default one clk cycle), and inverted.
+
+**example of usage**
+
+```
+vxgen tb test                     # easy
+```
+
+```
+vxgen tb test.vhd 50 -d 25 -pn -rt 20    
+#generated tb_test.vhd and 50Mhz differencial clk with 25% duty cycle, rst <= '0', '1' after 20 ns
+```
   
 ### Package gen
 ```
@@ -137,13 +148,8 @@ args | discription
 {-a} | Add work lib and this pkg to all file in the folder
 {-f <folder>} | Default: current
   
-Generated pkg named &lt;pkg_name&gt; (default "pkg"). If -a is specified, all file in the folder will add work library as will as this pkg.
+Generated pkg framework named &lt;pkg_name&gt; (default "pkg"). If -a is specified, all file in the folder will add work library as will as this pkg.
 
-### Clear
-```
-vxgen clear {-f <folder>}
-```
-The tool till generate log and some mark commented at the first line of each file. Clear them using this command. Note that **after this command, the behaviour of vxgen is not predictable.** So make sure that you finish the creation process before running this command.
 
 ### Version
 ```
