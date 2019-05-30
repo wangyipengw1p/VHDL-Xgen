@@ -28,7 +28,7 @@ vxgen <func> {<args>}
 > * reset will be synchoronous negative-rst.
 ### Generation
 ``` 
-vxgen gen <entityname> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} {-f <folder>}
+vxgen gen <entitypath> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} 
 ```
 Generate the templete ```.vhd``` file based on ```<VXGEN-PATH>/conf/title.conf``` and ```libaray.conf```
   - Comment in .conf using '**#**' if you don't want to generate the items and libraries in the vhd file.
@@ -38,17 +38,19 @@ Generate the templete ```.vhd``` file based on ```<VXGEN-PATH>/conf/title.conf``
 
 **example of usage**
 ```
-vxgen gen test -i clk rst data 8 -o data_out 16
-vxgen gen test -i clk -o data 8 -i rst -io bus 16
-vxgen gen test -f ~/work-dir -i clk rst -o output
-vxgen gen test
+vxgen gen test -i clk rst data 8 -o data_out 16     # test.vhd will be generated
+vxgen gen test -i clk -o data 8 -i rst -io bus 16   # -i -o -io can exist anywhere
+vxgen gen test.vhd  -i clk rst -o output            # test.vhd will be generated
+vxgen gen test.txt                                  # test.txt.vhd will be generated
+vxgen gen ~/work-dir/test                           # add full path, '.vhd' can still be omitted; no ports;
 ```
   
-### Add framworks or components
+### Add code framworks or components
 ```
 vxgen add <filename> <component> {<args>} {-f <folder>}
 ```
- 
+
+
 | component | description |
 |  :-: | ------------- |
 | counter | Counter named "count&lt;countNum&gt;" is added to &lt;filename&gt;, which will count from 1 to &lt;countNum&gt; and reset to 0. |
@@ -57,6 +59,7 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 | reg | Create reg framework as indicated by ps(positive triggered,sync reset) na(negative triggered,asynchronous reset) pa ns. Default ps |
 | \<component\> | The tool will check first in the current folder for the component and add. If not exists, the tool will then find in lib. if -n is specified, the tool will not do the auto instantiation and connection. |
 
+*<filename> should not contain path
 *Script will be generated in \<filename\> for counter, clk_div, fsm and reg.
 *Remember to name the \<component\> with '_' to indicate that it's not the first level entity.
 
@@ -66,9 +69,9 @@ vxgen add test.vhd counter 200 4    #add two counters, 'test.vhd' is also accept
 vxgen add test div_clk 3 20         #add a even div clk and a odd div clk
 vxgen add test fsm 5
 vxgen add test fsm  idle work play study
-vxgen add test reg
+vxgen add test reg                  # add a positive triggered, sync reset reg
 vxgen add test reg ps na            # add two regs
-vxgen add test testcomponent        # add component from current folder
+vxgen add test testcomponent        # add component from current folder (which means 'testcomponent.vhd' exists in work folder
 vxgen add test binary_to_sg.vhd     # add component from lib, vhd file will be copied; 'binary_to_sg.vhd' is also accepted 
 ```
 
