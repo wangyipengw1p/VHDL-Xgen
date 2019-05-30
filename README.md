@@ -92,6 +92,7 @@ args | discription
 {-i ... -o ... -io ...} | io ports for Top entity
   
 **example of usage**
+
 Generate top, including entity1 entity2, specify the ports and do the auto connection
 ```
 vxgen top toptop.vhd -c entity1 entity2.vhd -i clk rst -o data  #you can choose whether to add '.vhd'
