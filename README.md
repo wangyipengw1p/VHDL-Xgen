@@ -128,13 +128,13 @@ Generate the testbench for specific entity. clock is created named "clk", whose 
 
 **example of usage**
 
+Generate tb_test.vhd with 100Mhz clk and nagative rst.
 ```
 vxgen tb test                     # easy
 ```
-
+generated tb_test.vhd and 50Mhz differencial clk with 25% duty cycle, rst <= '0', '1' after 20 ns
 ```
 vxgen tb test.vhd 50 -d 25 -pn -rt 20    
-#generated tb_test.vhd and 50Mhz differencial clk with 25% duty cycle, rst <= '0', '1' after 20 ns
 ```
   
 ### Package gen
