@@ -62,6 +62,7 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 *<filename> should not contain path
 *Script will be generated in \<filename\> for counter, clk_div, fsm and reg.
 *Remember to name the \<component\> with '_' to indicate that it's not the first level entity.
+*the auto connection will connect port with the signals or ports witn same name and width. If not exist, the tool will generate signals for component. Especially if the signals or ports exists but width miss-mach, the tool will rename the signal like signalx, signalxx, signalxxx etc.
 
 **example of usage**
 ```
