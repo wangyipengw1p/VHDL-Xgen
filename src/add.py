@@ -14,15 +14,17 @@ def findArchBegin(data):
 			flag = 1
 			beginEnd = beginEnd + 1
 		if 'end process' in line or 'end function' in line or 'end procedure' in line: ################???
-			beginEnd = beginEnd + 1
+			# deal with the problem that multipal 'end' in one line
+			beginEnd = beginEnd + len(line.split('end process')) + len(line.split('end function')) + len(line.split('end procedure')) - 3
 		if line[0:6] == 'begin ' or line[0:6] == 'begin\t' or line[0:6] == 'begin\n' or ' begin ' in line or \
 		'\tbegin ' in line or '\tbegin\t' in line or ' begin\t' in line or ' begin\n' in line or '\tbegin\n' in line or \
 		';begin ' in line or ';begin\n' in line or ';begin\t' in line:
+			# multipal begin can't be in the same line
 			beginEnd = beginEnd - 1
 		if beginEnd == 0 and flag == 1:
 			return data.index(line)
 
-	print("Can't find proper architerture begin, please check input file.\n")
+	print("ERROR: Can't find proper architerture begin, please check input file.\n")
 	exit(1)
 
 def findArchHead(data):
@@ -32,15 +34,18 @@ def findArchHead(data):
 		bool2 = 'is' in line  #not all but enough
 		if bool1 and bool2 :
 			return data.index(line)
-	print("Can't find proper architerture head, please check input file.\n")
+	print("ERROR: Can't find proper architerture head, please check input file.\n")
 	exit(1)
 
 def findArchEnd(data): #find the last end
 	for line in reversed(data):
 		line = line.split('--',1)[0] #omit the comments
-		if line[0:4] == 'end ' or line[0:4] == 'end\t' or ' end ' in line or '\tend ' in line or '\tend\t' in line or ' end\t' in line:
+		if 'end architecture' in line:
+			if 'end process' in line:
+				print('ERROR: \'end process\' and \'end architecture\' in the same line. Please check the syntex.')
+				exit(1)
 			return data.index(line)
-	print("Can't find proper architerture end, please check input file.\n")
+	print("ERROR: Can't find proper architerture end, please check input file.\n")
 	exit(1)
 
 def addcounter(writename, countnum):
@@ -142,8 +147,7 @@ def addfsm(writefile, arg):
 	bpt = bpt + 1
 	data.insert(bpt, 'end process;\n')
 	bpt = bpt + 1
-	data.insert(bpt, '--------------------------------------------</FSM>\n')
-	bpt = bpt + 1
+	
 	with open(writefile, 'w') as file:
 		for line in data:
 			file.write(line)
@@ -181,7 +185,7 @@ def getEntityHead(data):
 	
 
 	if len(cpdata) == 0:
-		print('Can\'t find entity declearation. Please check input file.')
+		print('ERROR: Can\'t find entity declearation. Please check input file.')
 		exit(1)
 	cpdata.reverse()
 	
@@ -258,30 +262,47 @@ def addcomponent(writefile, componentf, auto):
 		data.insert(ptb, 'inst_' + componentName + ': port map(\n')
 		ptb  = ptb + 1
 		signalsToRename = []
+		signalsToAdd = []
 		for port in cportsDic:
 			if port in portsDic :
 				if not cportsDic[port] == portsDic[port]: #width !=
 					signalsToRename.append(port)
+				
 			elif port in masterSignals:
 				if not cportsDic[port] == masterSignals[port]:
 					signalsToRename.append(port)
-				
+			else:
+				signalsToAdd.append(port)
+			
 		for port in cportsDic:
 			if port in signalsToRename:
-				data.insert(ptb, '\t'+ port +'\t=> '+port+'_'+componentName+',\n')
+				# if the component has been added before, or the name confilicts with the exist signal, 
+				# the tool will rename like portx portxx portxxx ...
+				rename = port
+				while rename in masterSignals or rename in portsDic:
+					rename = rename + 'x'
+				
+				data.insert(ptb, '\t'+ port +'\t=> '+rename+',\n')
 				ptb = ptb + 1
+				sigwidth = int(cportsDic[port])
+				if sigwidth == 1:
+					data.insert(ptbb, 'signal ' + rename +': std_logic;\n')
+					ptbb = ptbb + 1
+				else:
+					data.insert(ptbb, 'signal ' + rename +': std_logic_vector('+ str(sigwidth-1) +' downto 0);\n')
+					ptbb = ptbb + 1
 			else:
 				data.insert(ptb, '\t'+ port +'\t=> '+port+',\n')
 				ptb = ptb + 1
 		data[ptb - 1] = data[ptb - 1][:-2] + '\n' # delete last ,
 		data.insert(ptb, ');\n\n')
-		for sig in signalsToRename:
+		for sig in signalsToAdd:
 			sigwidth = int(cportsDic[sig])
 			if sigwidth == 1:
-				data.insert(ptbb, 'signal ' + sig + '_'+componentName+': std_logic;\n')
+				data.insert(ptbb, 'signal ' + sig +': std_logic;\n')
 				ptbb = ptbb + 1
 			else:
-				data.insert(ptbb, 'signal ' + sig + '_'+componentName+': std_logic_vector('+ str(sigwidth-1) +' downto 0);\n')
+				data.insert(ptbb, 'signal ' + sig +': std_logic_vector('+ str(sigwidth-1) +' downto 0);\n')
 				ptbb = ptbb + 1
 
 	with open(writefile, 'w') as file:
@@ -296,9 +317,11 @@ def addComponents(arg):
 	function entry for 'add'
 	'''
 	if len(arg) == 0 :
-		print('Input arguments error!\nUsage:vxgen add <filename> <component> <arg> ...\n')
+		print('ERROR: Input arguments error!\nUsage:vxgen add <filename> <component> <arg> ...\n')
 		exit(1)
-	entityname = arg.pop(0)
+	[entitypath,entityname] = os.path.split(arg.pop(0))
+	if not entitypath == '':
+		print('Warning: <filename> should not contain path. Use -f <folder> to change.\nWarning: <folder> using default: '+os.getcwd()+'\n')
 	if '-f' in arg:
 		filepath = arg.pop(arg.index('-f')+1)
 		arg.pop(arg.index('-f'))
@@ -311,33 +334,33 @@ def addComponents(arg):
 	if not os.path.exists(filename):
 		writeframe(filename, entityname)
 	elif len(arg) == 0 :
-		print('Input arguments error!\nUsage:vxgen add <filename> <component> <arg> ...\n')
+		print('ERROR: Input arguments error!\nUsage:vxgen add <filename> <component> <arg> ...\n')
 		exit(1)
 	else:
 		component = arg.pop(0)
 		if component == 'counter':
 			if len(arg) == 0:
-				print('Input arguments error!\nUsage:vxgen add <filename> counter <num> ...\n')
+				print('ERROR: Input arguments error!\nUsage:vxgen add <filename> counter <num> ...\n')
 				exit(1)
 			for item in arg:
 				if not item.isdigit():
-					print('Input arguments error!\nUsage:vxgen add <filename> counter <num> ...\n')
+					print('ERROR: Input arguments error!\nUsage:vxgen add <filename> counter <num> ...\n')
 					exit(1)
 				else:
 					addcounter(filename, int(item))
 		elif component == 'clk_div':
 			if len(arg) == 0:
-				print('Input arguments error!\nUsage:vxgen add <filename> clk_div <num> ...\n')
+				print('ERROR: Input arguments error!\nUsage:vxgen add <filename> clk_div <num> ...\n')
 				exit(1)
 			for item in arg:
 				if not item.isdigit():
-					print('Input arguments error!\nUsage:vxgen add <filename> clk_div <num> ...\n')
+					print('ERROR: Input arguments error!\nUsage:vxgen add <filename> clk_div <num> ...\n')
 					exit(1)
 				else:
 					addclkdiv(filename, int(item))
 		elif component == 'fsm':
 			if len(arg) == 0:
-				print('Input arguments error!\nUsage:vxgen add fsm <num> {<args>} ...\n')
+				print('ERROR: Input arguments error!\nUsage:vxgen add fsm <num> {<args>} ...\n')
 				exit(1)
 			addfsm(filename, arg)
 		elif component == 'reg':
@@ -363,5 +386,5 @@ def addComponents(arg):
 				shutil.copyfile(libname, currentname)
 				addcomponent(filename, currentname, autocon)
 			else :
-				print('Can\'t find anyone of following files:\n%s\n%s\n'%(currentname, libname))
+				print('ERROR: Can\'t find anyone of following files:\n%s\n%s\n'%(currentname, libname))
 				exit(1)

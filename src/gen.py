@@ -190,13 +190,14 @@ def generation(arg):
 	'''
 	function entry for 'gen'
 	'''
-	entityname = arg.pop(0)
-	if '-f' in arg:
-		filepath = arg.pop(arg.index('-f')+1)
-		arg.pop(arg.index('-f'))
+	[entitypath, entityname] = os.path.split(arg.pop(0))
+	if not entitypath == '':
+		filepath = entitypath
 	else:
 		filepath = os.getcwd()
-	
-	filename = filepath + '/' + entityname + '.vhd'
+	if entityname[-4:] == '.vhd':
+		filename = filepath + '/' + entityname
+	else:
+		filename = filepath + '/' + entityname + '.vhd'
 	writeframe(filename, entityname)
 	addports(filename,arg)
