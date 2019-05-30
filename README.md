@@ -79,19 +79,35 @@ vxgen add test binary_to_sg.vhd     # add component from lib, vhd file will be c
   
 ### Top gen
 ```
-vxgen top {<topName>} {-n} {-f <folder>}
+vxgen top {<topName>} {-c <components>} {-u <components>] {-i ... -o ... -io ...} {-n} {-f <folder>}
 ```
 
 args | discription
 :-: | --
-{\<topName\>} | Specify the name. Default: "TOP".
+{\<topName\>} | Specify the name. Default: "\<current-folder\>_TOP".
 {-n} | Do not auto connect.
 {-f <folder>} | Default : current.
+{-c <components>} | include the \<components\>, which is placed in folder
+{-u <components>} | Do not include the \<components\>, which means add all components left in folder
+{-i ... -o ... -io ...} | io ports for Top entity
   
-Auto generation & connection for Top entities. 
-First the tool will find generate the framwork of the top entity named by &lt;topName&gt;(default "TOP"). If "-n" is specified, only generation will be done. Otherwise, the tool will find first in the <folder>(default current folder) for the file named "\*_TOP.conf". And connect the port as indicated in the file. If no such file, the tool will include all entities, whose name does not include '&apos;	_&apos;	(underline) connect the the port with same name **(recommand)**, and only generate the signal for the ports left, which means that they are not connected.
-If there's already been a file named "\*_TOP.vhd", the tool will only do the auto connection work.
-**It's recommand to name all clock as "clk" and connect disired clk manually after auto connection. Other logics should be added manually.**
+**example of usage**
+Generate top, including entity1 entity2, specify the ports and do the auto connection
+```
+vxgen top toptop.vhd -c entity1 entity2.vhd -i clk rst -o data  #you can choose whether to add '.vhd'
+```
+Generate the top named '<currend-folder>_TOP.vhd', add all vhd entities in folder as component and do the auto connection
+  
+```
+vxgen top                     #easy      
+```
+
+Generate the top named 'proj_TOP.vhd', specify the ports, add entities in the folder other than sub_component1 sub_component2 and do not do the auto connection
+
+```
+vxgen top proj_TOP -i clk rst -o d_out -i d_in -u sub_component1 sub_component2 -n    #declear io anywhere
+```
+* Do not command -u -c -n more than once. It'll raise error!
 
 ### Testbench gen
 ```
