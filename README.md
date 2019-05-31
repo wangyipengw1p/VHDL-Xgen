@@ -18,10 +18,33 @@ sh setup.sh
 ```
 Done. 
 
-Then reopen the terminal and command following to test if you've done things correctly.
+Then re-open the terminal and command following to test if you've done things correctly.
 ```
 vxgen version
 ```
+**Windows**
+We need to use cmd. If you know something, don't just follow the following. Make sure to open [`setup_win`](https://github.com/wangyipengw1p/VHDL-Xgen/setup_win.cmd) [`setenv_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/data/setenv_win.cmd) and check :)
+
+Please move the master folder to some safe place on your disk and try NOT to move it.
+```
+run setup_win.cmd as admin
+```
+Done.
+Then re-open the cmd and command following to test if you've done things correctly.
+```
+vxgen version
+```
+## File Structure
+folder | explanition
+:--: | --
+master | Contains README and setup files
+src | Main python script 
+data | Contain vital data for this tool **DO NOT modify**
+conf | library and title configuration [more](https://github.com/wangyipengw1p/VHDL-Xgen#generation)
+lib | You can add your own vhd here and add as component [more](https://github.com/wangyipengw1p/VHDL-Xgen#add-code-framworks-or-components)
+examples | Some example usages
+
+
 
 ## Usage
 ```
@@ -30,21 +53,15 @@ vxgen <func> {<args>}
 
 ## [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)  [add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components) [top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen)  [tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen)  [pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen)  [version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
 ## Function
->  If not specified:
-> * \<folder\> will be the current folder.
-> * Auto-connect will connect the port with the same name.
-> * \<filename\> is treated equally with \<entityname\>.
-> * register will be positive triggered
-> * reset will be synchoronous negative-rst.
+
 ### Generation
 ``` 
 vxgen gen <entitypath> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} 
 ```
 Generate the templete ```.vhd``` file based on ```<VXGEN-PATH>/conf/title.conf``` and ```libaray.conf```
   - Comment in .conf using '**#**' if you don't want to generate the items and libraries in the vhd file.
-  - remember to add a ```<space>``` behind item name to assign content. 
-  - `Time` `Platform`will be auto completed. If ```Engineer``` is not specified vxgen will use <usrname>.
-  - If \<width\> is not specified, default value is 1
+  - `Time` `Platform`will be auto completed. If ```Engineer``` is not specified \<usrname\> in os will be added.
+  - If \<width\> is not specified, default value is 1, which is `std_logic`. Currently, this tool only supports `std_logic` and `std_logic_vector` for signal type.
 
 **example of usage**
 ```
@@ -63,16 +80,17 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 
 | component | description |
 |  :-: | ------------- |
-| counter | Counter named "count&lt;countNum&gt;" is added to &lt;filename&gt;, which will count from 1 to &lt;countNum&gt; and reset to 0. |
+| counter | Counter named "count$countNum;" is added to &lt;filename&gt;, which will count from 1 to &lt;countNum&gt; and reset to 0. |
 | div_clk | Divided the clk by &lt;div&gt; and named the out put clk like "clkd_10" "clkd_3" etc. |
 | FSM | Create the FSM framwork. \<args\> can be one number, where states like s0 s1 ... will be generated. One can also specify state names in \<args\> |
 | reg | Create reg framework as indicated by ps(positive triggered,sync reset) na(negative triggered,asynchronous reset) pa ns. Default ps |
-| \<component\> | The tool will check first in the current folder for the component and add. If not exists, the tool will then find in lib. if -n is specified, the tool will not do the auto instantiation and connection. |
+| \<component\> | The tool will check first in the current folder for the component and add. If not exists, the tool will then find in lib. if `-n` is specified, the tool will not do the auto instantiation and connection. |
 
-*<filename> should not contain path
-*Script will be generated in \<filename\> for counter, clk_div, fsm and reg.
-*Remember to name the \<component\> with '_' to indicate that it's not the first level entity.
-*the auto connection will connect port with the signals or ports witn same name and width. If not exist, the tool will generate signals for component. Especially if the signals or ports exists but width miss-mach, the tool will rename the signal like signalx, signalxx, signalxxx etc.
+* <filename> should not contain path
+* Script will be generated **in** \<filename\> for counter, clk_div, fsm and reg. 
+* The auto connection will connect port with the signals or ports witn same name and width. If not exist, the tool will generate signals for component. Especially if the signals or ports exists but width miss-mach, the tool will rename the signal like signalx, signalxx, signalxxx etc.
+* As indicated above, currently, this tool only supports `std_logic` and `std_logic_vector` for signal type. For example,  types like `record` or user defined type will be treadted as `std_logic`; Types like `unsigned(7 downto 0)` will be treated as `std_logic_vector(7 downto 0)`
+* Only `downto` format is supported currently for port connection. 
 
 **example of usage**
 ```
@@ -142,7 +160,7 @@ Generate tb_test.vhd with 100Mhz clk and nagative rst.
 ```
 vxgen tb test                     # easy
 ```
-generated tb_test.vhd and 50Mhz differencial clk with 25% duty cycle, rst <= '0', '1' after 20 ns
+generated tb_test.vhd and 50Mhz differencial clk with 25% duty cycle. Reset (rst <= '0', '1' after 20 ns) will be generated.
 ```
 vxgen tb test.vhd -q 50 -d 25 -diff -rt 20    
 ```
@@ -167,10 +185,15 @@ vxgen version
 ```
 Check if you've succeffully installed the VHDL-Xgen.
 
-## Notes
-- Please write one entiey per file and assign same name for file. In this tool, &lt;entityname&gt; is treated equally with &lt;filename&gt;.
-- Please name the first-level entities (which are to be included by top entities) with out **'_'** , or it'll be treated as second-level entities and ignore when auto-connecting in the top module.
-- It's recommanded to integrate the IP cores at last, cus their names always contain '_'.
-- It's recommand to name all clock as "clk" and connect disired clk manually after auto connection for TOP.
+### Help
+```
+vxgen help
+```
+Print help message.
 
 ------------------
+
+### Syntex requirement
+* Use **lower case** for keyword.
+* Main entity should be at the end of the file.
+* Use `end entity <entityname>` instead of just `end <entityname>`.
