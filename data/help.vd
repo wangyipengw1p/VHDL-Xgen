@@ -1,1 +1,71 @@
-help
+--------------------------------------------
+Generation
+--------------------------------------------
+vxgen gen 
+
+<filename>       specify the name
+                 Default: a_VHDL_file.vhd
+-i               specify in ports
+-o               specify out ports
+-io              specify inout ports
+
+--------------------------------------------
+Add code framworks or components
+--------------------------------------------
+vxgen add <filename> <component> <args>
+
+<filename>	     without path
+<component> <args>
+                 counter     <num>
+				 clk_div     <num>
+				 fsm         <num>
+				 fsm         <state-list>
+				 reg
+				             ps
+							 pa
+							 ns
+							 na
+				 <component-name>
+-f               specify the folder
+				 Default: current
+--------------------------------------------
+Top gen
+--------------------------------------------
+vxgen top
+
+<topname>        specify the name
+                 Default: <folder>_TOP.vhd
+-c               include the following components
+-u               exclude the following components
+-i               specify in ports
+-o               specify out ports
+-io              specify inout ports
+--------------------------------------------
+Testbench gen
+--------------------------------------------
+vxgen tb <entityname>
+
+<entityname>     specify the name
+-q               specify the clk frequency
+                 Unit:      MHZ
+                 Default:  100MHz
+-d               specify the duty cycle
+                 Unit:        %
+                 Default:    50%
+-diff            add differential clk
+-pr              positive reset                
+-nr              negative reset 
+-rt              reset time
+                 Unit:      ns
+				 Default: 1 clk cycle
+--------------------------------------------
+Package gen
+--------------------------------------------
+vxgen pkg
+
+<pkg_name>       specify the name
+				 Default: <folder>_pkg.vhd
+-a               Add work lib and this pkg to all 
+                 file in the folder
+-f               specify the folder
+				 Default: current
