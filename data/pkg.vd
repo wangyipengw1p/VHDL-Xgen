@@ -1,0 +1,7 @@
+package $pkg_name is 
+
+end package;
+
+package body $pkg_name is
+
+end package body;
