@@ -1,7 +1,7 @@
 # VHDL-Xgen
 
 [![build status](https://img.shields.io/badge/build-pass-brightgreen.svg)](https://img.shields.io/badge/build-pass-brightgreen.svg)
-[![test status](https://img.shields.io/badge/test-undergoing-blue.svg)](https://img.shields.io/badge/test-undergoing-blue.svg)
+[![test status](https://img.shields.io/badge/test-pass%20basic-blue.svg)](https://img.shields.io/badge/test-pass%20basic-blue.svg)
 
 VHDL 自动生成工具,面相同步电路，自顶向下流程设计。
 
