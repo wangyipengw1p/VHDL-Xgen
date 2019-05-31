@@ -12,7 +12,9 @@ Python file does not need to build. The main file is `src/vxgen.py`. For convien
 cd $VHDL-Xgen-dir 
 sh setup.sh
 ```
-Done. Then command following to test if you've done things correctly.
+Done. 
+
+Then reopen the terminal and command following to test if you've done things correctly.
 ```
 vxgen version
 ```
