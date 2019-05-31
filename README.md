@@ -54,7 +54,7 @@ examples | Some example usages
 vxgen <func> {<args>}
 ```
 
-## [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)  [add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components) [top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen)  [tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen)  [pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen)  [version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
+## [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)  &#160;&#160;&#160;&#160;[add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components) &#160;&#160;&#160;&#160;[top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen)  &#160;&#160;&#160;&#160;[tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen) &#160; &#160;&#160;&#160;[pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen)  &#160;&#160;&#160;&#160;[version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
 ## Function
 
 ### Generation
