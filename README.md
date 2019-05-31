@@ -53,6 +53,13 @@ examples | Some example usages
 ```
 vxgen <func> {<args>}
 ```
+------------------
+
+### Syntex requirement
+* Use **lower case** for keyword.
+* Main entity should be at the end of the file.
+* Use `end entity <entityname>` instead of just `end <entityname>`.
+-------------------
 
 ## [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)  &#160;&#160;&#160;&#160;[add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components) &#160;&#160;&#160;&#160;[top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen)  &#160;&#160;&#160;&#160;[tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen) &#160; &#160;&#160;&#160;[pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen)  &#160;&#160;&#160;&#160;[version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
 ## Function
@@ -194,9 +201,4 @@ vxgen help
 ```
 Print help message.
 
-------------------
 
-### Syntex requirement
-* Use **lower case** for keyword.
-* Main entity should be at the end of the file.
-* Use `end entity <entityname>` instead of just `end <entityname>`.
