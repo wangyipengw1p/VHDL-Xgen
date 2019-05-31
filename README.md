@@ -56,7 +56,7 @@ vxgen <func> {<args>}
 
 ### Generation
 ``` 
-vxgen gen <entitypath> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} 
+vxgen gen <filename> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} 
 ```
 Generate the templete ```.vhd``` file based on ```<VXGEN-PATH>/conf/title.conf``` and ```libaray.conf```
   - Comment in .conf using '**#**' if you don't want to generate the items and libraries in the vhd file.
