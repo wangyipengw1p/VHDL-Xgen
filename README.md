@@ -99,6 +99,7 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 * Script will be generated **in** \<filename\> for counter, clk_div, fsm and reg. 
 * The auto connection will connect port with the signals or ports witn same name and width. If not exist, the tool will generate signals for component. Especially if the signals or ports exists but width miss-mach, the tool will rename the signal like signalx, signalxx, signalxxx etc.
 * As indicated above, currently, this tool only supports `std_logic` and `std_logic_vector` for signal type. For example,  types like `record` or user defined type will be treadted as `std_logic`; Types like `unsigned(7 downto 0)` will be treated as `std_logic_vector(7 downto 0)`
+* `in` `out` is not considered while connecting the ports. (Because I think its unnecessary)
 * Only `downto` format is supported currently for port connection. 
 
 **example of usage**
