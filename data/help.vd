@@ -21,10 +21,10 @@ vxgen add <filename> <component> <args>
 				 fsm         <num>
 				 fsm         <state-list>
 				 reg
-				             ps
-							 pa
-							 ns
-							 na
+                                             ps
+                                             pa
+                                             ns
+                                             na
 				 <component-name>
 -f               specify the folder
 				 Default: current
