@@ -72,13 +72,13 @@ def printInfo():
 	datapath = os.environ["VHDLXGEN_PATH"] + '/data'
 	with open(datapath + '/version.vd', 'r') as file:
 		for line in file:
-			print(line)
+			print(line,end= '')
 	
 def printHelp():	
 	datapath = os.environ["VHDLXGEN_PATH"] + '/data'
 	with open(datapath + '/help.vd', 'r') as file:
 		for line in file:
-			print(line)
+			print(line,end= '')
 	
 
 def main():
