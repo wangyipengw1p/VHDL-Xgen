@@ -9,7 +9,10 @@ import os
 	# addports(writefile, arg)
 #-------------------------------------------
 
-def writeframe(writefile, entityname):
+def writeFrame(writefile):
+	'''
+	Write title and libaraies.
+	'''
 	confpath = os.environ["VHDLXGEN_PATH"] + '/conf'
 	title = []
 	lib = []
@@ -45,11 +48,20 @@ def writeframe(writefile, entityname):
 				line = line.strip()
 				if line[0] != '#':
 					file.write( line+ '\n')
+
+def writeEntity(writefile, entityname):
+	'''
+	Write Entity framwork
+	'''
+	with open(writefile, 'a') as file:
 		file.write('\nentity ' + entityname + ' is\n' + 'port(\n);\nend entity;\n\n')
 		file.write('architecture behaviral of '+ entityname + ' is\n\n' + 'begin\n\n' + 'end architecture;')
 
 
 def addports(writefile, arg):
+	'''
+	Add ports as specified in arg
+	'''
 	pi = []
 	po = []
 	pio = []
@@ -190,14 +202,20 @@ def generation(arg):
 	'''
 	function entry for 'gen'
 	'''
-	[entitypath, entityname] = os.path.split(arg.pop(0))
-	if not entitypath == '':
-		filepath = entitypath
-	else:
+	if len(arg) == 0:
+		print('Info: file name not specified. Use \'a_vhdl_file\' :)\n')
 		filepath = os.getcwd()
+		entityname = 'a_vhdl_file'
+	else:
+		[entitypath, entityname] = os.path.split(arg.pop(0))
+		if not entitypath == '':
+			filepath = entitypath
+		else:
+			filepath = os.getcwd()
 	if entityname[-4:] == '.vhd':
 		filename = filepath + '/' + entityname
 	else:
 		filename = filepath + '/' + entityname + '.vhd'
-	writeframe(filename, entityname)
+	writeFrame(filename)
+	writeEntity(filename, entityname)
 	addports(filename,arg)

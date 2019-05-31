@@ -2,6 +2,13 @@ from math import *
 import shutil
 import os
 
+def findEntityHead(data):
+	for line in data:
+		if 'entity ' in line and ' is' in line:
+			return data.index(line)
+	print('Can\'t find proper entity head.\n')
+	exit(1)
+
 def findArchBegin(data):
 	'''
 	Find the index of 'begin' of architecture, in the list of file data
@@ -91,9 +98,9 @@ def addclkdiv(writefile, divnum):
 	with open(sfile, 'r') as file:
 		sdata = file.readlines()
 	for line in sdata:
-		line.replace('#div', str(divnum))
-		line.replace('#width', str(divwidth - 1))
-		line.replace('$name',clkname)
+		line = line.replace('#div', str(divnum))
+		line = line.replace('#width', str(divwidth - 1))
+		line = line.replace('$name',clkname)
 		data.insert(datapt, line)
 		datapt = datapt + 1
 

@@ -24,7 +24,12 @@ def topGen(arg):
 	else:
 		auto = True
 
-	if len(arg) == 0:
+	if len(arg) == 0 :
+		filename = filepath + '/'+ filepath.split('/')[-1] + '_TOP.vhd'
+		topname = filepath.split('/')[-1] + '_TOP'
+		print('Info: filename no specified, use ' + topname + '.vhd\n')
+		print('Info: No ports specified in top file.\n')
+	elif '-' in arg[0]:
 		filename = filepath + '/'+ filepath.split('/')[-1] + '_TOP.vhd'
 		topname = filepath.split('/')[-1] + '_TOP'
 		print('Info: filename no specified, use ' + topname + '.vhd\n')
@@ -34,14 +39,15 @@ def topGen(arg):
 			print('Warning: <filename> should not contain path. Use -f <folder> to change.\nWarning: <folder> using default: '+os.getcwd()+'\n')
 		if not filename[-4:] == '.vhd':
 			topname = filename[:-4]
-			filename = filepath + filename + '.vhd'
+			filename = filepath + '/'+ filename + '.vhd'
 		else:
 			topname = filename
-			filename = filepath + filename
+			filename = filepath + '/' + filename
 	allfile = filter(is_component, allfile)
 
 	if len(arg) == 0:
-		writeframe(filename, topname)
+		writeFrame(filename)
+		writeEntity(filename, topname)
 		for item in allfile:
 			addcomponent(filename,filepath + '/'+item, auto)
 	else:
@@ -59,7 +65,8 @@ def topGen(arg):
 					print('ERROR: component' +  arg[argindex] + ' not found in ' + filepath+'.\n')
 					exit(1)
 				allfile1.append(arg[argindex])
-			writeframe(filename, topname)
+			writeFrame(filename)
+			writeEntity(filename, topname)
 			addports(filename, arg)
 			for item in allfile1:
 				addcomponent(filename,filepath + item, auto)
@@ -73,12 +80,14 @@ def topGen(arg):
 					print('ERROR: component' +  arg[argindex] + ' not found in ' + filepath+'.\n')
 					exit(1)
 				allfile.pop(allfile.index(arg[argindex]))
-			writeframe(filename, topname)
+			writeFrame(filename)
+			writeEntity(filename, topname)
 			addports(filename, arg)
 			for item in allfile:
 				addcomponent(filename,filepath + item, auto)
 		else:
-			writeframe(filename, topname)
+			writeFrame(filename)
+			writeEntity(filename, topname)
 			addports(filename, arg)
 			for item in allfile:
-				addcomponent(filename,filepath + item, auto)
+				addcomponent(filename,filepath +'/'+ item, auto)

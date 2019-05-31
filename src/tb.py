@@ -22,7 +22,8 @@ def tbGen(arg):
 		exit(1)
 	fullname = filepath + '/' + filename
 	tbfullname = filepath + '/'+'tb_' + filename
-	writeframe(tbfullname, 'tb_' + filename[:-4])
+	writeFrame(tbfullname)
+	writeEntity(tbfullname, 'tb_' + filename[:-4])
 	with open(tbfullname ,'r') as file:
 		tbdata = file.readlines()
 	popindex = 0

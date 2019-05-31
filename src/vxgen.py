@@ -11,9 +11,7 @@ from tb import *
 
 # Requirement:
 	#main entity shoud be by the end of the file
-	# entity one line, begin one line
 	# use 'end entity'
-	# port(
 
 
 # Problem:
@@ -21,32 +19,39 @@ from tb import *
 # 0 downto 0
 
 
-
+def is_not_pkg(name):
+	if name[-4:] == '.vhd' and not 'pkg' in name:
+		return True
+	else:
+		return False
 		
 
 def pkgGen(arg):
-	if len(arg) ==0:
-		print('Usage: vxgen pkg <pkg_name> {-a} {-f <folder>}')
-		exit(1)
+	
+	
 	if '-f' in arg:
 		filepath = arg.pop(arg.index('-f') + 1)
 		arg.pop(arg.index('-f'))
 	else:
 		filepath = os.getcwd()
+
 	allfile = os.listdir(filepath)
-	filename = arg.pop(0)
+	allfile = filter(is_not_pkg,allfile)
+	cufolder = filepath.split('/')[-1]
+	if len(arg) == 0:
+		print('Info: package name not specified. Use ' + cufolder + '_pkg :)\n')
+		filename = cufolder + '_pkg'
+	elif '-' in arg[0]:
+		print('Info: package name not specified. Use ' + cufolder + '_pkg :)\n')
+		filename = cufolder + '_pkg'
+	else:
+		filename = arg.pop(0)
 	if not filename[-4:] == '.vhd':
-		filename = filename + 'vhd'
-	fullname = filepath + filename 
-	confpath = os.environ["VHDLXGEN_PATH"] + '/conf'
+		filename = filename + '.vhd'
+	fullname = filepath + '/' + filename 
+	writeFrame(fullname)
 	datapath = os.environ["VHDLXGEN_PATH"] + '/data'
-	with open(fullname, 'w+') as file:
-		with open(confpath + '/library.conf', 'r') as f:
-			for line in f:
-				line = line.strip()
-				if line[0] != '#':
-					file.write( line+ '\n')
-		file.write('\n')
+	with open(fullname, 'a') as file:
 		with open(datapath + '/pkg.vd', 'r') as f:
 			for line in f:
 				line = line.replace('$pkg_name', filename[:-4])
@@ -54,15 +59,26 @@ def pkgGen(arg):
 	
 	if '-a' in arg:
 		for file in allfile:
-			with open(filepath + file, 'a') as f:
-				f.seek(0, 0)
-				f.write('library work;\nuse work.'+filename[:-4]+'.all;\n')
+			with open(filepath + '/' + file, 'r') as f:
+				dataf = f.readlines()
+			pt = findEntityHead(dataf)
+			dataf.insert(pt,'library work;\nuse work.'+filename[:-4]+'.all;\n')
+			with open(filepath + '/' + file, 'w') as f:
+				for line in dataf:
+					f.write(line)
 	
 
 def printInfo():
-	print('\nVHDL-Xgen  Version: 0.0\n');
+	datapath = os.environ["VHDLXGEN_PATH"] + '/data'
+	with open(datapath + '/version.vd', 'r') as file:
+		for line in file:
+			print(line)
 	
-	
+def printHelp():	
+	datapath = os.environ["VHDLXGEN_PATH"] + '/data'
+	with open(datapath + '/help.vd', 'r') as file:
+		for line in file:
+			print(line)
 	
 
 def main():
@@ -82,9 +98,11 @@ def main():
 	elif Fun == 'tb':
 		tbGen(sys.argv[2:])
 	elif Fun == 'pkg':
-		pgkGen(sys.argv[2:])
+		pkgGen(sys.argv[2:])
 	elif Fun == 'version':
 		printInfo()
+	elif Fun == 'help':
+		printHelp()
 	else :
 		print("Usage: python vxgen.py <func> <args>")
 		exit(1)
