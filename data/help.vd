@@ -20,14 +20,11 @@ vxgen add <filename> <component> <args>
 				 clk_div     <num>
 				 fsm         <num>
 				 fsm         <state-list>
-				 reg
-                                             ps
-                                             pa
-                                             ns
-                                             na
-				 <component-name>
+				 reg         ps, pa, ns, na
+				 
+                 <component-name>
 -f               specify the folder
-				 Default: current
+                 Default: current
 --------------------------------------------
 Top gen
 --------------------------------------------
@@ -57,17 +54,17 @@ vxgen tb <entityname>
 -nr              negative reset 
 -rt              reset time
                  Unit:      ns
-				 Default: 1 clk cycle
+                 Default: 1 clk cycle
 --------------------------------------------
 Package gen
 --------------------------------------------
 vxgen pkg
 
 <pkg_name>       specify the name
-				 Default: <folder>_pkg.vhd
+                 Default: <folder>_pkg.vhd
 -a               Add work lib and this pkg to all 
                  file in the folder
 -f               specify the folder
-				 Default: current
+                 Default: current
 
 
