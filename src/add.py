@@ -193,26 +193,27 @@ def getEntityHead(data):
 
 def getPorts(data):
 	'''
-	in: entity data
-	out: port names and widths
+	in: port() or generic()
+	out: names and widths
 	'''
 	name = []
 	width = []
 	ports = {}
 	for line in data:
 		line =  line.split('--',1)[0] #omit the comments
-		if (not 'generic'in line) and ':' in line:
-			names = line.split(':')[0].split(',') #deal with multiple ports in one line
-			for item in names:
-				name.append(item.strip())
-			
-			str2 = line.split(':')[1]
-			if 'downto' in str2:
+		if  ':' in line:
+			for part in line.split(';')[:-1]:			#deal with [e.g. port( clk : in std_logic; rst: in std_logic;)]
+				names = part.split(':')[0].split(',') #deal with multiple ports in one line, [e.g. clk, rst : in std_logic;]
 				for item in names:
-					width.append(int(int(filter(str.isdigit,str2.split('downto')[0])) + 1))		#e.g. (7 downto 0) -->  8
-			else:
-				for item in names:
-					width.append(1)
+					name.append(item.strip())
+				
+				str2 = part.split(':')[1]
+				if 'downto' in str2:
+					for item in names:
+						width.append(int(int(filter(str.isdigit,str2.split('downto')[0])) + 1))		#e.g. (7 downto 0) -->  8
+				else:
+					for item in names:
+						width.append(1)
 	
 		
 	for i in range(len(name)):
@@ -220,11 +221,17 @@ def getPorts(data):
 	return ports
 
 def getSignals(data):
+	'''
+	in : original file data; out: Dictionary for signals and width
+	'''
 	signals = []
 	width = []
 	sig = {}
 	for line in data:
-		if 'signal ' in line:
+		if len(line.split('signal ')) > 2:
+			print('Multi-signals in one line. Please check syntex\nStop')
+			exit(1)
+		if 'signal ' in line:			#multi-signals in one line is not good syntex, which is not supported
 			signames = line.split('signal')[1].split(':')[0].split(',')    #deal with multiple ports in one line
 			for item in signames:
 				signals.append(item.strip())
@@ -249,6 +256,42 @@ def getSignals(data):
 #      PORT MAP (a(0)=>d3,a(1)=>d4,a(2)=>d5,
 #                           a(3)=>d6,a(4)=>d7, c=>q2);
 
+def getGenericPart(data):
+	gdata = []
+	flag = False
+	for line in data:
+		if 'generic' in line:
+			flag = True
+			line = line.replace('generic','')
+			line = line.replace('(','')
+			gdata.append(line)
+		elif 'port' in line or 'end entity' in line:
+			flag = False
+		else:
+			if flag:
+				
+				gdata.append(line)
+	return gdata
+
+def getPortPart(data):
+	gdata = []
+	flag = False
+	for line in data:
+		if 'port' in line:
+			line = line.replace('port','')
+			line = line.replace('(','')
+			flag = True
+			gdata.append(line)
+		elif 'generic' in line or 'end entity' in line:
+			flag = False
+		else:
+			if flag:
+				
+				gdata.append(line)
+	return gdata
+
+
+
 def addcomponent(writefile, componentf, auto):
 	with open(writefile, 'r') as file:
 		data = file.readlines()
@@ -257,13 +300,14 @@ def addcomponent(writefile, componentf, auto):
 	pt = findArchHead(data) + 1
 	
 	entityhead = getEntityHead(data)
-	
-	
-	
 	centityhead = getEntityHead(cdata)
+
 	masterSignals = getSignals(data)
-	portsDic = getPorts(entityhead)
-	cportsDic = getPorts(centityhead)
+	portsDic = getPorts(getPortPart(entityhead))
+	cportsDic = getPorts(getPortPart(centityhead))
+	if len(cportsDic) == 0:
+		print('Warning: '+componentf+' has no ports\n')
+	cgeneDic = getPorts(getGenericPart(centityhead))
 	componentName = os.path.split(componentf)[1][:-4]
 	# write component declearations
 	for line in centityhead:
@@ -274,8 +318,6 @@ def addcomponent(writefile, componentf, auto):
 	
 	# write port map
 	if auto:
-		
-		
 		signalsToRename = []
 		signalsToAdd = []
 		for port in cportsDic:
@@ -290,8 +332,21 @@ def addcomponent(writefile, componentf, auto):
 				signalsToAdd.append(port)
 		ptb  = findArchBegin(data) + 1
 		ptbb = findArchBegin(data)
-		data.insert(ptb, 'inst_' + componentName + ': port map(\n')
+		data.insert(ptb, 'inst_' + componentName +':' + componentName+' ')			#+ ': port map(\n'
 		ptb = ptb+1
+		# insert generic map
+		if len(cgeneDic) > 0:
+			data.insert(ptb, 'generic map(\n')
+			ptb  = ptb + 1
+			for item in cgeneDic:
+				data.insert(ptb, '\t' + item + ' =>,\n')
+				ptb = ptb + 1
+			data[ptb - 1] = data[ptb - 1][:-2] + '\n'				#delete last ,
+			data.insert(ptb, ')\n')
+			ptb = ptb + 1
+		data.insert(ptb, 'port map(\n')
+		ptb = ptb + 1
+		#insert port map
 		for port in cportsDic:
 			if port in signalsToRename:
 				# if the component has been added before, or the name confilicts with the exist signal, 
