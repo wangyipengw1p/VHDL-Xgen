@@ -45,6 +45,7 @@ data | 包含重要数据 **请不要更改**
 conf | 配置默认文件头和library
 lib | 你可以在这里添加你自己的lib，使用add功能作为component添加
 examples | 一些例子
+doc | 有用的文档
 
 
 ------------------
@@ -57,7 +58,7 @@ examples | 一些例子
 
 ## [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)  &#160;&#160;&#160;&#160;[add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components) &#160;&#160;&#160;&#160;[top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen)  &#160;&#160;&#160;&#160;[tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen) &#160; &#160;&#160;&#160;[pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen)  &#160;&#160;&#160;&#160;[version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
 
-## Generation
+## 生成单个VHDL文件
 ``` 
 vxgen gen <filename> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} 
 ```
@@ -109,7 +110,7 @@ vxgen add test binary_to_sg.vhd     # 从库中添加'binary_to_sg.vhd'作为com
 ```
 
   
-## Top gen
+## 生成TOP文件
 ```
 vxgen top {<topName>} {-c <components>} {-u <components>] {-i ... -o ... -io ...} {-n} {-f <folder>}
 ```
@@ -145,7 +146,7 @@ vxgen top proj_TOP -i clk rst -o d_out -i d_in -u sub_component1 sub_component2 
 ```
 
 
-## Testbench gen
+## 生成Testbench
 ```
 vxgen tb <entityname> {-q <clkFrequency>} {-d <dutycycle>} {-diff} {-pr/-nr} {-rt <rst-time>}
 ```
@@ -171,7 +172,7 @@ testbench添加50MHz差分时钟，25%占空比 (rst <= '0', '1' after 20 ns) wi
 ```
 vxgen tb test.vhd -q 50 -d 25 -diff -rt 20    
 ```
-## Package gen
+## 生成Package
 ```
 vxgen pkg <pkg_name> {-a} {-f <folder>}
 ```
