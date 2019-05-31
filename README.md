@@ -1,9 +1,9 @@
-[中文版](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/CNREADME.md) 
+
 # VHDL-Xgen
 [![build status](https://img.shields.io/badge/build-pass-brightgreen.svg)](https://img.shields.io/badge/build-pass-brightgreen.svg)
 [![test status](https://img.shields.io/badge/test-pass%20basic-blue.svg)](https://img.shields.io/badge/test-pass%20basic-blue.svg)
 
-
+#### [中文版](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/CNREADME.md) 
 
 VHDL auto generation tool, Targetting Synchronous, Top-down design flow.
 
