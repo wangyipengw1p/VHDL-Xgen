@@ -47,11 +47,6 @@ lib | 你可以在这里添加你自己的lib，使用add功能作为component�
 examples | 一些例子
 
 
-
-## 使用
-```
-vxgen <func> {<args>}
-```
 ------------------
 
 ## 代码规范要求
