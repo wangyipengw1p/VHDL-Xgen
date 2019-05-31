@@ -6,10 +6,12 @@
 
 
 
-VHDL auto generation tool, Targetting Synchronous, Top-down design flow. Support only one entity per file.
+VHDL auto generation tool, Targetting Synchronous, Top-down design flow.
 
 ## Build
-Python file does not need to build. The main file is `src/vxgen.py`. For convience, command
+Python file does not need to build. The main file is `src/vxgen.py`. 
+**Linux**
+For convience, command
 ```
 cd $VHDL-Xgen-dir 
 sh setup.sh
