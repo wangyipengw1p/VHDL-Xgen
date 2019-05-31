@@ -6,7 +6,7 @@ from add import *
 
 
 def is_component(a):
-	if a[-4:] == '.vhd' and (not 'tb_' in a) and(not '_TOP' in a):
+	if a[-4:] == '.vhd' and (not 'tb' in a) and(not 'TOP' in a) and (not 'pkg' in a):
 		return True
 	else:
 		return False
@@ -19,7 +19,7 @@ def topGen(arg):
 		filepath = os.getcwd()
 	allfile = os.listdir(filepath)
 	if '-n' in arg:
-		arg.pop(arg.index('-f'))
+		arg.pop(arg.index('-n'))
 		auto = False
 	else:
 		auto = True
@@ -58,33 +58,37 @@ def topGen(arg):
 			allfile1 = []
 			argindex = arg.index('-c')
 			arg.pop(argindex)
-			while not '-' in arg[argindex]:
+			while len(arg) != 0 and (not '-' in arg[argindex]):
 				if not arg[argindex][-4:] == '.vhd':
 					arg[argindex] = arg[argindex] + '.vhd'
 				if not arg[argindex] in allfile:
 					print('ERROR: component' +  arg[argindex] + ' not found in ' + filepath+'.\n')
 					exit(1)
 				allfile1.append(arg[argindex])
+				arg.pop(argindex)
+			print(filename)
 			writeFrame(filename)
 			writeEntity(filename, topname)
 			addports(filename, arg)
 			for item in allfile1:
-				addcomponent(filename,filepath + item, auto)
+				addcomponent(filename,filepath +'/'+ item, auto)
 		elif '-u' in arg:
 			argindex = arg.index('-u')
 			arg.pop(argindex)
-			while not '-' in arg[argindex]:
+			while len(arg) != 0 and(not '-' in arg[argindex]):
 				if not arg[argindex][-4:] == '.vhd':
 					arg[argindex] = arg[argindex] + '.vhd'
 				if not arg[argindex] in allfile:
 					print('ERROR: component' +  arg[argindex] + ' not found in ' + filepath+'.\n')
 					exit(1)
+				
 				allfile.pop(allfile.index(arg[argindex]))
+				arg.pop(argindex)
 			writeFrame(filename)
 			writeEntity(filename, topname)
 			addports(filename, arg)
 			for item in allfile:
-				addcomponent(filename,filepath + item, auto)
+				addcomponent(filename,filepath +'/'+ item, auto)
 		else:
 			writeFrame(filename)
 			writeEntity(filename, topname)
