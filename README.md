@@ -47,11 +47,6 @@ lib | You can add your own vhd here and add as component [more](https://github.c
 examples | Some example usages
 
 
-
-## Usage
-```
-vxgen <func> {<args>}
-```
 ------------------
 
 ## Syntex requirement
