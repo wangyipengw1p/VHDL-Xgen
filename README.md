@@ -55,16 +55,15 @@ vxgen <func> {<args>}
 ```
 ------------------
 
-### Syntex requirement
+## Syntex requirement
 * Use **lower case** for keyword.
 * Main entity should be at the end of the file.
 * Use `end entity <entityname>` instead of just `end <entityname>`.
 -------------------
 
 ## [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)  &#160;&#160;&#160;&#160;[add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components) &#160;&#160;&#160;&#160;[top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen)  &#160;&#160;&#160;&#160;[tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen) &#160; &#160;&#160;&#160;[pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen)  &#160;&#160;&#160;&#160;[version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
-## Function
 
-### Generation
+## Generation
 ``` 
 vxgen gen <filename> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} 
 ```
@@ -82,7 +81,7 @@ vxgen gen test.txt                                  # test.txt.vhd will be gener
 vxgen gen ~/work-dir/test                           # add full path, '.vhd' can still be omitted; no ports;
 ```
   
-### Add code framworks or components
+## Add code framworks or components
 ```
 vxgen add <filename> <component> {<args>} {-f <folder>}
 ```
@@ -115,7 +114,7 @@ vxgen add test binary_to_sg.vhd     # add component from lib, vhd file will be c
 ```
 
   
-### Top gen
+## Top gen
 ```
 vxgen top {<topName>} {-c <components>} {-u <components>] {-i ... -o ... -io ...} {-n} {-f <folder>}
 ```
@@ -148,7 +147,7 @@ vxgen top proj_TOP -i clk rst -o d_out -i d_in -u sub_component1 sub_component2 
 ```
 *Do not command -u -c -n more than once. It'll raise error!*
 
-### Testbench gen
+## Testbench gen
 ```
 vxgen tb <entityname> {-q <clkFrequency>} {-d <dutycycle>} {-diff} {-pr/-nr} {-rt <rst-time>}
 ```
@@ -174,8 +173,7 @@ generated tb_test.vhd and 50Mhz differencial clk with 25% duty cycle. Reset (rst
 ```
 vxgen tb test.vhd -q 50 -d 25 -diff -rt 20    
 ```
-  
-### Package gen
+## Package gen
 ```
 vxgen pkg <pkg_name> {-a} {-f <folder>}
 ```
@@ -189,13 +187,13 @@ args | discription
 Generated pkg framework named &lt;pkg_name&gt; (default "pkg"). If -a is specified, all file in the folder will add work library as will as this pkg.
 
 
-### Version
+## Version
 ```
 vxgen version
 ```
 Check if you've succeffully installed the VHDL-Xgen.
 
-### Help
+## Help
 ```
 vxgen help
 ```
