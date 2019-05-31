@@ -2,7 +2,7 @@
 [![build status](https://img.shields.io/badge/build-pass-brightgreen.svg)](https://img.shields.io/badge/build-pass-brightgreen.svg)
 [![test status](https://img.shields.io/badge/test-undergoing-blue.svg)](https://img.shields.io/badge/test-undergoing-blue.svg)
 
-```Still developing```
+
 
 VHDL auto generation tool, Targetting Synchronous, Top-down design flow. Support only one entity per file.
 
@@ -22,7 +22,7 @@ vxgen version
 vxgen <func> {<args>}
 ```
 
-## [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)  [add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components) [top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen)  [tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen)  [pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen)  [clear](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#clear) [version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
+## [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)  [add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components) [top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen)  [tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen)  [pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen)  [version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
 ## Function
 >  If not specified:
 > * \<folder\> will be the current folder.
