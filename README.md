@@ -23,7 +23,7 @@ Then re-open the terminal and command following to test if you've done things co
 vxgen version
 ```
 **Windows**
-We need to use cmd. If you know something, don't just follow the following. Make sure to open [`setup_win`](https://github.com/wangyipengw1p/VHDL-Xgen/setup_win.cmd) [`setenv_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/data/setenv_win.cmd) and check :)
+We need to use cmd. If you know something, make sure to open [`setup_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/setup_win.cmd) [`setenv_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/data/setenv_win.cmd) and check :)
 
 Please move the master folder to some safe place on your disk and try NOT to move it.
 ```
