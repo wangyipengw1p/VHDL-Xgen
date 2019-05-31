@@ -10,7 +10,9 @@ VHDL auto generation tool, Targetting Synchronous, Top-down design flow.
 
 ## Build
 Python file does not need to build. The main file is `src/vxgen.py`. 
+
 **Linux**
+
 For convience, command
 ```
 cd $VHDL-Xgen-dir 
@@ -23,6 +25,7 @@ Then re-open the terminal and command following to test if you've done things co
 vxgen version
 ```
 **Windows**
+
 We need to use cmd. If you know something, make sure to open [`setup_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/setup_win.cmd) [`setenv_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/data/setenv_win.cmd) and check :)
 
 Please move the master folder to some safe place on your disk and try NOT to move it.
