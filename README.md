@@ -23,7 +23,7 @@ Then re-open the terminal and command following to test if you've done things co
 ```
 vxgen version
 ```
-**Windows**
+**Windows** (haven't tested)
 
 We need to use cmd. If you know something, make sure to open [`setup_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/setup_win.cmd) [`setenv_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/data/setenv_win.cmd) and check :)
 
