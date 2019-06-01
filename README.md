@@ -49,7 +49,7 @@ examples | Some example usages
 
 ------------------
 
-## Syntex requirement
+## Syntax requirement
 * Use **lower case** for keyword.
 * Main entity should be at the end of the file.
 * Use `end entity <entityname>` instead of just `end <entityname>`.
