@@ -18,7 +18,7 @@ port(
 	clk	: in	std_logic;
 	rst	: in	std_logic;
 	t2_t4	: in	std_logic_vector(7 downto 0);
-	t5_o	: in	std_logic;
+	t5_o	: in	std_logic
 );
 end entity;
 
