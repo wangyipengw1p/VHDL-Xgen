@@ -1,8 +1,30 @@
+
+#-----------------------------
+#Functions:
+	# addComponents(arg)
+	# findEntityHead(data)
+	# findArchBegin(data)
+	# findArchHead(data)
+	# findArchEnd(data)
+	# addcounter(writename, countnum)
+	# addclkdiv(writefile, divnum)
+	# addfsm(writefile, arg)
+	# addreg(writefile, mode)
+	# getEntityHead(data)
+	# getPorts(data)			*from GenericPart or PortPart
+	# getSignals(data)
+	# getGenericPart(data)
+	# getPortPart(data)
+
+
 from math import *
 import shutil
 import os
 
 def findEntityHead(data):
+	'''
+	Find the line, in which 'entity ... is' exists
+	'''
 	for line in data:
 		if 'entity ' in line and ' is' in line:
 			return data.index(line)
@@ -13,21 +35,23 @@ def findArchBegin(data):
 	'''
 	Find the index of 'begin' of architecture, in the list of file data
 	'''
-	beginEnd = 0
+	beginEnd = 0		#check if a architecture begin (reversed view)
 	flag = 0
-	for line in reversed(data):
-		line = line.split('--',1)[0] #omit the comments
+	for line in reversed(data):			# scan from the end of the file, 
+										# which is why it's required to place the main entity by the end of a file
+		# Pair the 'end' with its 'begin'
+		line = line.split('--',1)[0]	#omit the comments
 		if 'end architecture' in line:
 			flag = 1
 			beginEnd = beginEnd + 1
-		if 'end process' in line or 'end function' in line or 'end procedure' in line: ################???
+		if 'end process' in line or 'end function' in line or 'end procedure' in line: # only this 3 keywords could have paired 'begin'
 			# deal with the problem that multipal 'end' in one line
 			beginEnd = beginEnd + len(line.split('end process')) + len(line.split('end function')) + len(line.split('end procedure')) - 3
 		if line[0:6] == 'begin ' or line[0:6] == 'begin\t' or line[0:6] == 'begin\n' or ' begin ' in line or \
 		'\tbegin ' in line or '\tbegin\t' in line or ' begin\t' in line or ' begin\n' in line or '\tbegin\n' in line or \
 		';begin ' in line or ';begin\n' in line or ';begin\t' in line:
-			# multipal begin can't be in the same line
-			beginEnd = beginEnd - 1
+			# Theoratically multipal begin can't be in the same line
+			beginEnd = beginEnd -  1
 		if beginEnd == 0 and flag == 1:
 			return data.index(line)
 
@@ -62,14 +86,17 @@ def addcounter(writename, countnum):
 	'''
 	with open(writename, 'r') as file:
 		data = file.readlines()
-	datapt = findArchBegin(data)
+	datapt = findArchBegin(data)		#pointer
 	countname = 'count' + str(countnum)
-	countwidth = int(ceil(log(countnum, 2)))
+	countwidth = int(ceil(log(countnum, 2)))	#required width
 	data.insert(datapt, 'signal ' + countname + ': unsigned(' + str(countwidth - 1) + ' downto 0);\n')
-	datapt = datapt + 2
+	
+	datapt = datapt + 2		#now after 'begin', which is why 'begin' is required to be in an exclusive line
+	
 	with open(os.environ["VHDLXGEN_PATH"] + '/data/count.vd', 'r') as file:
 		countdata = file.readlines()
 	for line in countdata:
+		#do the replacement
 		line = line.replace('$count_name', countname)
 		line = line.replace('#count_num', str(countnum))
 		line = line.replace('#count_width', str(countwidth))
@@ -252,16 +279,7 @@ def getSignals(data):
 	for i in range(len(signals)):
 		sig[signals[i]] = width[i]
 	return sig
-#ENTITY PGAND2 IS
-#    GENERIC (    trise : TIME := 1 ns;
-#              tfall : TIME := 1 ns ) ;
-#       PORT (    a1 : IN STD_LOGIC ;
-#             a0 : IN STD_LOGIC ;
-#             z0 : OUT STD_LOGIC );
-#END ENTITY PGAND2;
-#GENERIC MAP (n =>5)
-#      PORT MAP (a(0)=>d3,a(1)=>d4,a(2)=>d5,
-#                           a(3)=>d6,a(4)=>d7, c=>q2);
+                   
 
 def getGenericPart(data):
 	gdata = []
@@ -376,7 +394,8 @@ def addcomponent(writefile, componentf, auto):
 			else:
 				data.insert(ptb, '\t'+ port +'\t=> '+port+',\n')
 				ptb = ptb + 1
-		data[ptb - 1] = data[ptb - 1][:-2] + '\n' # delete last ,
+		if len(cportsDic) != 0:
+			data[ptb - 1] = data[ptb - 1][:-2] + '\n' # delete last ,
 		data.insert(ptb, ');\n\n')
 		for sig in signalsToAdd:
 			sigwidth = int(cportsDic[sig])
