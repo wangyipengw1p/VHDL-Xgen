@@ -22,9 +22,10 @@ sh setup.sh
 vxgen version
 ```
 如果你看到提示信息说明你已经可以正常使用以下功能了。
+
 **Windows**
 
-我们需要cmd. 如果你对系统比较了解，请打开 [`setup_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/setup_win.cmd) [`setenv_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/data/setenv_win.cmd) 看看我写了什么。当然你也可以以自己习惯的方式配置 :)
+我们需要cmd. 如果你对系统比较了解，请打开 [`setup_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/setup_win.cmd) [`setenv_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/data/setenv_win.cmd) 查看内容。当然你也可以以自己习惯的方式配置 :)
 
 请尽量将仓库文件夹存储在安全位置，不要移动。如果移动，你可能需要重新运行
 ```
