@@ -32,7 +32,7 @@ port(
 	rst	: in	std_logic;
 	t2_t4	: in	std_logic_vector(7 downto 0);
 	t3_t4	: in	std_logic_vector(7 downto 0);
-	d_out	: out	std_logic_vector(3 downto 0);
+	d_out	: out	std_logic_vector(3 downto 0)
 );
 end component;
 component t3 is
@@ -40,7 +40,7 @@ port(
 	clk	: in	std_logic;
 	rst	: in	std_logic;
 	t1_t3	: in	std_logic_vector(3 downto 0);
-	t3_t4	: out	std_logic_vector(7 downto 0);
+	t3_t4	: out	std_logic_vector(7 downto 0)
 );
 end component;
 component t1 is
@@ -49,7 +49,7 @@ port(
 	rst	: in	std_logic;
 	data	: in	std_logic_vector(7 downto 0);
 	t1_t2	: out	std_logic_vector(15 downto 0);
-	t1_t3	: out	std_logic_vector(3 downto 0);
+	t1_t3	: out	std_logic_vector(3 downto 0)
 );
 end component;
 component t2 is
@@ -57,7 +57,7 @@ port(
 	clk	: in	std_logic;
 	t1_t2	: in	std_logic_vector(15 downto 0);
 	rst	: in	std_logic;
-	t2_t4	: out	std_logic_vector(7 downto 0);
+	t2_t4	: out	std_logic_vector(7 downto 0)
 );
 end component;
 
