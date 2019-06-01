@@ -58,7 +58,7 @@ def topGen(arg):
 			allfile1 = []
 			argindex = arg.index('-c')
 			arg.pop(argindex)
-			while len(arg) != 0 and (not '-' in arg[argindex]):
+			while len(arg) != 0 and (argindex < len(arg)) and (not '-' in arg[argindex]):
 				if not arg[argindex][-4:] == '.vhd':
 					arg[argindex] = arg[argindex] + '.vhd'
 				if not arg[argindex] in allfile:
@@ -74,7 +74,7 @@ def topGen(arg):
 		elif '-u' in arg:
 			argindex = arg.index('-u')
 			arg.pop(argindex)
-			while len(arg) != 0 and(not '-' in arg[argindex]):
+			while len(arg) != 0 and (argindex < len(arg))and(not '-' in arg[argindex]):
 				if not arg[argindex][-4:] == '.vhd':
 					arg[argindex] = arg[argindex] + '.vhd'
 				if not arg[argindex] in allfile:
