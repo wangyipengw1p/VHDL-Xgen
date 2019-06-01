@@ -4,8 +4,9 @@ import getpass
 import os
 #-------------------------------------------
 # function:
-	# genaration():
-	# writeframe(writefile, entityname)
+	# genaration(arg)
+	# writeframe(writefile)		*with path
+	# writeEntity(writefile, entityname)		*must be used adjasent to writeframe
 	# addports(writefile, arg)
 #-------------------------------------------
 
@@ -18,6 +19,7 @@ def writeFrame(writefile):
 	lib = []
 	with open(writefile, 'w+') as file:
 		file.write("--------------------------------------------------\n")
+		# write docu head
 		with open(confpath + '/title.conf', 'r') as f:
 			for line in f:
 				line = line.strip()
@@ -43,6 +45,7 @@ def writeFrame(writefile):
 					else:
 						file.write('-- '+ line+ '\n')
 		file.write("--------------------------------------------------\n\n\n\n")
+		#write library
 		with open(confpath + '/library.conf', 'r') as f:
 			for line in f:
 				line = line.strip()
@@ -60,12 +63,12 @@ def writeEntity(writefile, entityname):
 
 def addports(writefile, arg):
 	'''
-	Add ports as specified in arg
+	Add ports as specified in arg, arg_in contains only -i... -o... -io...
 	'''
 	pi = []
 	po = []
 	pio = []
-	pstate = 0
+	pstate = 0		#state machine
 	for item in arg:
 		if pstate == 0:
 			if item == '-i':
@@ -107,12 +110,12 @@ def addports(writefile, arg):
 	
 	with open(writefile, 'r') as file:
 		data = file.readlines()
-
-	datapt = 0
+	
+	datapt = 0	#data pointer
 	for line in data:
-		if 'port(' in line:
+		if 'port' in line:
 			datapt = data.index(line) + 1
-	flag = 0
+	flag = 0			#deal with omitted width, two stage state machine
 	for item in pi:
 		if flag == 0:
 			if item.isdigit():
@@ -137,6 +140,7 @@ def addports(writefile, arg):
 				datapt = datapt + 1
 	if flag == 1:
 		data[datapt - 1] = data[datapt - 1]+'\t: in\tstd_logic;\n'
+	# Do the same for po and pio, Should have added function but ...
 	flag = 0
 	for item in po:
 		if flag == 0:
@@ -188,8 +192,8 @@ def addports(writefile, arg):
 	if flag == 1:
 		data[datapt - 1] = data[datapt - 1]+'\t: in\tstd_logic;\n'
 
-	if not (len(pi) == 0 and len(po) == 0 and len(pio) == 0):
-		data[datapt - 1] = data[datapt - 1][:-2] + '\n' #delete last ;
+	if not (len(pi) == 0 and len(po) == 0 and len(pio) == 0):			#delete last ;
+		data[datapt - 1] = data[datapt - 1][:-2] + '\n' 
 	
 	with open(writefile, 'w') as file:
 		for line in data:
@@ -205,10 +209,10 @@ def generation(arg):
 	if len(arg) == 0 or '-' in arg[0]:
 		print('Info: file name not specified. Use \'a_vhdl_file\' :)\n')
 		filepath = os.getcwd()
-		entityname = 'a_vhdl_file'
+		entityname = 'a_vhdl_file'					# default name, you could change
 	else:
 		[entitypath, entityname] = os.path.split(arg.pop(0))
-		if not entitypath == '':
+		if not entitypath == '':					# full path is supported 
 			filepath = entitypath
 		else:
 			filepath = os.getcwd()
