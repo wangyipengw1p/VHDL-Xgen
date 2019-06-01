@@ -22,7 +22,7 @@ port(
 	rst	: in	std_logic;
 	data	: in	std_logic_vector(7 downto 0);
 	t1_t2	: out	std_logic_vector(15 downto 0);
-	t1_t3	: out	std_logic_vector(3 downto 0);
+	t1_t3	: out	std_logic_vector(3 downto 0)
 );
 end entity;
 
