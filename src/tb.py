@@ -18,7 +18,7 @@ def tbGen(arg):
 	if not filename[-4:] == '.vhd':
 		filename = filename + '.vhd'
 	if not filename in allfile:
-		print('ERROR: ' +filename + 'not found in '+filepath)
+		print('ERROR: ' +filename + ' not found in '+filepath)
 		exit(1)
 	fullname = filepath + '/' + filename
 	tbfullname = filepath + '/'+'tb_' + filename
