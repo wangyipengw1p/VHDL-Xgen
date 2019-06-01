@@ -21,7 +21,7 @@ port(
 	clk	: in	std_logic;
 	rst	: in	std_logic;
 	data	: in	std_logic_vector(7 downto 0);
-	d_out	: out	std_logic_vector(3 downto 0);
+	d_out	: out	std_logic_vector(3 downto 0)
 );
 end entity;
 
