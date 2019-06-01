@@ -188,7 +188,7 @@ def addports(writefile, arg):
 	if flag == 1:
 		data[datapt - 1] = data[datapt - 1]+'\t: in\tstd_logic;\n'
 
-	if not len(pi) == 0 and len(po) == 0 and len(pio) == 0:
+	if not (len(pi) == 0 and len(po) == 0 and len(pio) == 0):
 		data[datapt - 1] = data[datapt - 1][:-2] + '\n' #delete last ;
 	
 	with open(writefile, 'w') as file:
@@ -202,7 +202,7 @@ def generation(arg):
 	'''
 	function entry for 'gen'
 	'''
-	if len(arg) == 0:
+	if len(arg) == 0 or '-' in arg[0]:
 		print('Info: file name not specified. Use \'a_vhdl_file\' :)\n')
 		filepath = os.getcwd()
 		entityname = 'a_vhdl_file'
