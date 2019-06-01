@@ -9,13 +9,11 @@ from tb import *
 
 
 
-# Requirement:
-	#main entity shoud be by the end of the file
-	# use 'end entity'
+
 
 
 # Problem:
-# component port map sequence
+# 
 # 0 downto 0
 
 
