@@ -66,7 +66,6 @@ def topGen(arg):
 					exit(1)
 				allfile1.append(arg[argindex])
 				arg.pop(argindex)
-			print(filename)
 			writeFrame(filename)
 			writeEntity(filename, topname)
 			addports(filename, arg)
