@@ -6,11 +6,11 @@
 VHDL 自动生成工具，面相同步电路，自顶向下流程设计。
 
 ## 编译
-Python 文件不需要编译，但需要你安装了Python环境，主文件是 `src/vxgen.py`. 
+Python 文件不需要编译，但需要Python环境。主文件是 `src/vxgen.py`. 
 
 **Linux**
 
-终端输入
+下面的shell会让命令更简化。终端输入
 ```
 cd $VHDL-Xgen-dir 
 sh setup.sh
@@ -91,8 +91,8 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 | reg | 添加D触发器的代码框架，参数可选择 `ps`(positive triggered,sync reset) `na`(negative triggered,asynchronous reset) `pa` `ns`. 默认 `ps` ，可添加多个|
 | \<component\> | 添加component，工具会现在当前目录中寻找，如果没有的话会在lib中寻找并复制到当前目录。-n 会使工具不进行自动连接 |
 
-* \<filename\> 不应包含路径，事实上路径会被工具忽略。正确做法是用-f指明。当然还是推荐者在当前目录工作。
-* counter, clk_div, fsm and reg 都是在文件中生成代码，而添加component只是实例化和链接。
+* \<filename\> 不应包含路径，事实上路径会被工具忽略。正确做法是用-f指明。当然还是推荐在当前目录工作。
+* counter, clk_div, fsm and reg 都是在文件中生成代码，而添加component只是实例化和端口连接。
 * 工具会自动连接名字相同而且位宽相同的端口，如果没有找到同名端口，工具会添加一个signal，如果名字相同位宽不同，工具会添加重命名的signal（重命名会在原有名称后面加x，直到不重名） 
 * 前面提到工具目前只支持`std_logic` 和 `std_logic_vector`。用户自定义类型会被视作  `std_logic`。特殊的，类似`unsigned(7 downto 0)` 的port会被视为 `std_logic_vector(7 downto 0)`
 * 工具在自动连接的时候暂时没有考虑`in` `out` 属性，因为我懒，略略略
@@ -106,7 +106,7 @@ vxgen add test fsm 5
 vxgen add test fsm  idle work play study
 vxgen add test reg                  # add a positive triggered, sync reset reg
 vxgen add test reg ps na            # 添加两个dff
-vxgen add test testcomponent        # 天价当前文件夹中的'testcomponent.vhd'作为component
+vxgen add test testcomponent        # 添加当前文件夹中的'testcomponent.vhd'作为component
 vxgen add test binary_to_sg.vhd     # 从库中添加'binary_to_sg.vhd'作为component
 ```
 
@@ -132,9 +132,9 @@ args | discription
 
 top包含 entity1 entity2, 指定了端口并且自动连接
 ```
-vxgen top toptop.vhd -c entity1 entity2.vhd -i clk rst -o data  #you can choose whether to add '.vhd'
+vxgen top toptop.vhd -c entity1 entity2.vhd -i clk rst -o data                     #you can choose whether to add '.vhd'
 ```
-一句话生成top文件，爽不爽？生成默认名称'<currend-folder>_TOP.vhd'的top文件,添加所有合适文件作为component，并且自动连接
+一句话生成top文件，是不是很爽？生成默认名称'<currend-folder>_TOP.vhd'的top文件,添加所有合适文件作为component，并且自动连接
   
 ```
 vxgen top                               #easy      
@@ -165,7 +165,7 @@ args | discription
 
 **例**
 
-一句话生成testbench，爽不爽？
+一句话生成testbench，是不是很爽？
 ```
 vxgen tb test                     # easy
 ```
