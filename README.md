@@ -89,9 +89,9 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 | reg | Create reg framework as indicated by ps(positive triggered,sync reset) na(negative triggered,asynchronous reset) pa ns. Default ps |
 | \<component\> | The tool will check first in the current folder for the component and add. If not exists, the tool will then find in lib. if `-n` is specified, the tool will not do the auto instantiation and connection. |
 
-* <filename> should not contain path
+* \<filename\> should not contain path
 * Script will be generated **in** \<filename\> for counter, clk_div, fsm and reg. 
-* The auto connection will connect port with the signals or ports witn same name and width. If not exist, the tool will generate signals for component. Especially if the signals or ports exists but width miss-mach, the tool will rename the signal like signalx, signalxx, signalxxx etc.
+* The auto connection will connect port(in component) with the signals or ports (in master file) with the **same name and width**. If not exist, the tool will generate signals for component. Especially if the signals or ports exists but width miss-mach, the tool will add renamed the signal like signalx, signalxx, signalxxx etc.
 * As indicated above, currently, this tool only supports `std_logic` and `std_logic_vector` for signal type. For example,  types like `record` or user defined type will be treadted as `std_logic`; Types like `unsigned(7 downto 0)` will be treated as `std_logic_vector(7 downto 0)`
 * `in` `out` is not considered while connecting the ports. (Because I think its unnecessary)
 * Only `downto` format is supported currently for port connection. 
@@ -152,11 +152,11 @@ args | discription
 \<entityname\> | name
 {-q \<clkFrequency\>} | Unit: MHz. Default: 100MHz
 {-d \<dutycycle\>} | Unit: %. Default: 50%
-{-pn} | Diffrencial clk. Name: "clkn" "clkp"
+{-diff} | Diffrencial clk. Name: "clkn" "clkp"
 {-pr/-nr} | Positive reset/ negative reset. **Default: neg-reset**
 {-rt \<rst-time\>} | Unit: ns; Default: 1 clk cycle
   
-Generate the testbench for specific entity. clock is created named "clk", whose frequency is set to &lt;clkFrequency&gt; MHz (default 100MHz). If -d is specified, the clk dutycycle is set to &lt;dutucycle&gt; (default 50%). If -pn is specified, differencial clk will be generated and named "clkp" and clkn". Reset is auto generated named "rst". If -pr is specified, it will be positive reset, otherwise, default setting is negative reset. Reset will last for &lt;rst-time&gt; (default one clk cycle), and inverted.
+Generate the testbench for specific entity. clock is created named "clk", whose frequency is set to &lt;clkFrequency&gt; MHz (default 100MHz). If -d is specified, the clk dutycycle is set to &lt;dutucycle&gt; (default 50%). If -diff is specified, differencial clk will be generated and named "clkp" and clkn". Reset is auto generated named "rst". If -pr is specified, it will be positive reset, otherwise, default setting is negative reset. Reset will last for &lt;rst-time&gt; (default one clk cycle), and inverted.
 
 **example of usage**
 
