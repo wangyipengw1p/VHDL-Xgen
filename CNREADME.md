@@ -3,7 +3,7 @@
 [![build status](https://img.shields.io/badge/build-pass-brightgreen.svg)](https://img.shields.io/badge/build-pass-brightgreen.svg)
 [![test status](https://img.shields.io/badge/test-pass%20basic-blue.svg)](https://img.shields.io/badge/test-pass%20basic-blue.svg)
 
-VHDL 自动生成工具,面相同步电路，自顶向下流程设计。
+VHDL 自动生成工具，面相同步电路，自顶向下流程设计。
 
 ## 编译
 Python 文件不需要编译，但需要你安装了Python环境，主文件是 `src/vxgen.py`. 
@@ -74,7 +74,7 @@ vxgen gen test -i clk rst data 8 -o data_out 16     # 生成了test.vhd
 vxgen gen test -i clk -o data 8 -i rst -io bus 16   # -i -o -io 可以乱序，或者重复出现
 vxgen gen test.vhd  -i clk rst -o output            # 这里生了test.vhd
 vxgen gen test.txt                                  # 而这里生成了test.txt.vhd
-vxgen gen ~/work-dir/test                           # 可以写绝对路径, '.vhd' 可以省略，没有ports
+vxgen gen ~/work-dir/test                           # 可以写绝对路径, '.vhd' 可以省略，这里生成文件没有ports
 ```
   
 ## 添加代码框架和component
@@ -91,9 +91,9 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 | reg | 添加D触发器的代码框架，参数可选择 `ps`(positive triggered,sync reset) `na`(negative triggered,asynchronous reset) `pa` `ns`. 默认 `ps` ，可添加多个|
 | \<component\> | 添加component，工具会现在当前目录中寻找，如果没有的话会在lib中寻找并复制到当前目录。-n 会使工具不进行自动连接 |
 
-* <filename> 不应包含路径，事实上路径会被工具忽略。正确做法是用-f指明。当然还是推荐者在当前目录工作。
+* \<filename\> 不应包含路径，事实上路径会被工具忽略。正确做法是用-f指明。当然还是推荐者在当前目录工作。
 * counter, clk_div, fsm and reg 都是在文件中生成代码，而添加component只是实例化和链接。
-* 工具会自动连接名字相同而且位宽相同的端口，如果没有找到同名端口，工具会添加一个signal，如果名字相同位宽不同，工具会重命名component的端口并添加signal（重命名会在原有名称后面加x，直到不重名） 
+* 工具会自动连接名字相同而且位宽相同的端口，如果没有找到同名端口，工具会添加一个signal，如果名字相同位宽不同，工具会添加重命名的signal（重命名会在原有名称后面加x，直到不重名） 
 * 前面提到工具目前只支持`std_logic` 和 `std_logic_vector`。用户自定义类型会被视作  `std_logic`。特殊的，类似`unsigned(7 downto 0)` 的port会被视为 `std_logic_vector(7 downto 0)`
 * 工具在自动连接的时候暂时没有考虑`in` `out` 属性，因为我懒，略略略
 * 注意：工具目前只支持`downto`形式的位宽声明
@@ -157,7 +157,7 @@ args | discription
 \<entityname\> | 名字
 {-q \<clkFrequency\>} | 时钟频率 单位: MHz. 默认: 100MHz
 {-d \<dutycycle\>} | 占空比 单位: %. 默认: 50%
-{-pn} | 添加差分时钟，命名为"clkn" "clkp"
+{-diff} | 添加差分时钟，命名为"clkn" "clkp"
 {-pr/-nr} | 高电平有效或者低电平有效 默认ns
 {-rt \<rst-time\>} | Unit: ns; Default: 1 clk cycle
   
@@ -169,7 +169,7 @@ args | discription
 ```
 vxgen tb test                     # easy
 ```
-testbench添加50MHz差分时钟，25%占空比 (rst <= '0', '1' after 20 ns) will be generated.
+testbench添加50MHz，25%占空比差分时钟;复位信号是这样的： (rst <= '0', '1' after 20 ns)
 ```
 vxgen tb test.vhd -q 50 -d 25 -diff -rt 20    
 ```
@@ -196,6 +196,5 @@ vxgen version
 ```
 vxgen help
 ```
-帮助信息，很有用的！
-
+帮助信息，备忘~
 
