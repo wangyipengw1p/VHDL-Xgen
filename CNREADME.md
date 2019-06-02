@@ -54,7 +54,8 @@ doc | 有用的文档
 ## 代码规范要求
 * 关键字**小写**
 * 主entity需要写在文件末尾
-* 请使用 `end entity <entityname>`不要只写 `end <entityname>`.
+* 请使用 `end entity <entityname>` `end architecture <arci-type>` 不要只写 `end <entityname>` `end <arci-type>`.
+* architecture的`begin`需要独占一行
 -------------------
 
 ## [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)  &#160;&#160;&#160;&#160;[add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components) &#160;&#160;&#160;&#160;[top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen)  &#160;&#160;&#160;&#160;[tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen) &#160; &#160;&#160;&#160;[pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen)  &#160;&#160;&#160;&#160;[version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
