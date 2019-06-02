@@ -23,15 +23,16 @@ Then re-open the terminal and command following to test if you've done things co
 ```
 vxgen version
 ```
-**Windows** (haven't tested)
+**Windows** 
 
 We need to use cmd. If you know something, make sure to open [`setup_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/setup_win.cmd) [`setenv_win.cmd`](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/data/setenv_win.cmd) and check :)
 
-Please move the master folder to some safe place on your disk and try NOT to move it.
+Please move the master folder to some safe place on your disk and try NOT to move itor you may have to re-run `setup_win.cmd`
 ```
 run setup_win.cmd as admin
 ```
 Done.
+> If you are using Windows 10, run `OpenCmdHere.reg` to add Windows Registry, which will add 'Open cmd here' to your right click menu
 Then re-open the cmd and command following to test if you've done things correctly.
 ```
 vxgen version

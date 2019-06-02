@@ -165,7 +165,7 @@ def addports(writefile, arg):
 				data.insert(datapt, '\t' + item)
 				datapt = datapt + 1
 	if flag == 1:
-		data[datapt - 1] = data[datapt - 1]+'\t: in\tstd_logic;\n'
+		data[datapt - 1] = data[datapt - 1]+'\t: out\tstd_logic;\n'
 	flag = 0
 	for item in pio:
 		if flag == 0:
@@ -190,7 +190,7 @@ def addports(writefile, arg):
 				data.insert(datapt, '\t' + item)
 				datapt = datapt + 1
 	if flag == 1:
-		data[datapt - 1] = data[datapt - 1]+'\t: in\tstd_logic;\n'
+		data[datapt - 1] = data[datapt - 1]+'\t: inout\tstd_logic;\n'
 
 	if not (len(pi) == 0 and len(po) == 0 and len(pio) == 0):			#delete last ;
 		data[datapt - 1] = data[datapt - 1][:-2] + '\n' 

@@ -31,6 +31,7 @@ vxgen version
 ```
 右键-以管理员方式打开setup_win.cmd
 ```
+> 如果你使用 Windows 10， 运行`OpenCmdHere.reg`来添加注册表，这会添加‘Open cmd here’选项到你的右键菜单
 搞定！
 打开cmd看看是否能够使用
 ```
@@ -96,7 +97,7 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 * counter, clk_div, fsm and reg 都是在文件中生成代码，而添加component只是实例化和端口连接。
 * 工具会自动连接名字相同而且位宽相同的端口，如果没有找到同名端口，工具会添加一个signal，如果名字相同位宽不同，工具会添加重命名的signal（重命名会在原有名称后面加x，直到不重名） 
 * 前面提到工具目前只支持`std_logic` 和 `std_logic_vector`。用户自定义类型会被视作  `std_logic`。特殊的，类似`unsigned(7 downto 0)` 的port会被视为 `std_logic_vector(7 downto 0)`
-* 工具在自动连接的时候暂时没有考虑`in` `out` 属性，因为我懒，略略略
+* 工具在自动连接的时候暂时没有考虑`in` `out` `inout`属性，因为我懒，略略略。（咳咳，其实我是扎样考虑的，既然工具主要自动连接名字相同的端口，那么用户在设计端口名称的时候就应该会考虑端口属性，至于`inout`一般只会出现在TOP文件中，而且一般需要设计三态门，所以在内部端口连接的时候不打需要考虑。即使自动连接工具并不是按照用户的意愿工作，在自动生成的文件中修改连接也是一件非常容易的事情）
 * 注意：工具目前只支持`downto`形式的位宽声明
 
 **example of usage**
