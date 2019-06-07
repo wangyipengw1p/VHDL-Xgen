@@ -1,4 +1,6 @@
-# VHDL-Xgen `v1.2`
+# VHDL-Xgen 
+
+`v1.2`
 
 [![build status](https://img.shields.io/badge/build-pass-brightgreen.svg)](https://img.shields.io/badge/build-pass-brightgreen.svg)
 [![test status](https://img.shields.io/badge/test-pass%20basic-blue.svg)](https://img.shields.io/badge/test-pass%20basic-blue.svg)
