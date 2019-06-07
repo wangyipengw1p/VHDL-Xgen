@@ -1,5 +1,7 @@
 #### [中文版](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/CNREADME.md) 
-# VHDL-Xgen `v1.2`
+# VHDL-Xgen 
+
+`v1.2`
 
 
 VHDL auto generation tool, Targetting Synchronous, Top-down design flow.
