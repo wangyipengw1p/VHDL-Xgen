@@ -1,4 +1,4 @@
-# VHDL-Xgen
+# VHDL-Xgen `v1.2`
 
 [![build status](https://img.shields.io/badge/build-pass-brightgreen.svg)](https://img.shields.io/badge/build-pass-brightgreen.svg)
 [![test status](https://img.shields.io/badge/test-pass%20basic-blue.svg)](https://img.shields.io/badge/test-pass%20basic-blue.svg)
@@ -32,7 +32,9 @@ vxgen version
 右键-以管理员方式打开setup_win.cmd
 ```
 > 如果你使用 Windows 10， 运行`OpenCmdHere.reg`来添加注册表，这会添加‘Open cmd here’选项到你的右键菜单
+
 搞定！
+
 打开cmd看看是否能够使用
 ```
 vxgen version
@@ -63,12 +65,13 @@ doc | 有用的文档
 
 ## 生成单个VHDL文件
 ``` 
-vxgen gen <filename> {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} 
+vxgen gen {<filename>} {-i <name> <width> ...} {-o <name> <width> ...} {-io <name> <width> ...} 
 ```
 依据```<VXGEN-PATH>/conf/title.conf``` 和 ```libaray.conf``` 的配置生成VHDL文件框架
   - 在conf文件中请使用'**#**'来注释
   - `Time` `Platform`会自动生成， 如果 ```Engineer``` 没有设置，将使用系统用户名
   - 如果 \<width\> 没有指明，默认1, 也就是`std_logic`. 目前port种类只支持 `std_logic` 和 `std_logic_vector`
+  - 如果filename没有指明，将会用什么呢？你猜
   
 **例**
 ```
@@ -79,6 +82,8 @@ vxgen gen test.txt                                  # 而这里生成了test.txt
 vxgen gen ~/work-dir/test                           # 可以写绝对路径, '.vhd' 可以省略，这里生成文件没有ports
 ```
   
+* 声称单个entity暂时不支持添加generic ports，因为其灵活性较高（而且命令行操作并没有对指令进行简化，所以我打算不添加这个功能）
+
 ## 添加代码框架和component
 ```
 vxgen add <filename> <component> {<args>} {-f <folder>}
@@ -98,6 +103,7 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 * 工具会自动连接名字相同而且位宽相同的端口，如果没有找到同名端口，工具会添加一个signal，如果名字相同位宽不同，工具会添加重命名的signal（重命名会在原有名称后面加x，直到不重名） 
 * 前面提到工具目前只支持`std_logic` 和 `std_logic_vector`。用户自定义类型会被视作  `std_logic`。特殊的，类似`unsigned(7 downto 0)` 的port会被视为 `std_logic_vector(7 downto 0)`
 * 工具在自动连接的时候暂时没有考虑`in` `out` `inout`属性，因为我懒，略略略。（咳咳，其实我是扎样考虑的，既然工具主要自动连接名字相同的端口，那么用户在设计端口名称的时候就应该会考虑端口属性，至于`inout`一般只会出现在TOP文件中，而且一般需要设计三态门，所以在内部端口连接的时候不打需要考虑。即使自动连接工具并不是按照用户的意愿工作，在自动生成的文件中修改连接也是一件非常容易的事情）
+* 添加component和自动连接功能支持generic ports
 * 注意：工具目前只支持`downto`形式的位宽声明
 
 **example of usage**
@@ -186,7 +192,23 @@ args | discription
 {-a} | 在文件下所有文件添加这个pkg
 {-f <folder>} | Default: current
   
+## VHDL-Xgen 批处理 `new`
+```
+vxgen {<vsh-path>}
+```
 
+现在你可以用拓展名 **.vsh** 的文件进行批处理. 这是一个文件内容示例
+
+```
+gen
+gen t1 -i clk rst -o data 8 -io bus 16
+add t1 clk_div 5
+top
+tb t1
+```
+
+* 如果没有指明vsh文件路径，工具会自动在当前文件夹中寻找，在这种情况下，如果有多个vsh文件在同一目录下，工具会报错。
+* 批处理文件**不**支持`Tab`
 
 ## Version
 ```
@@ -200,3 +222,4 @@ vxgen help
 ```
 帮助信息，备忘~
 
+> 处理各种VHDL文件时，考虑到所有情况是一个几乎不可能的任务，但是我尽量去尽可能多的处理各种情况，如果您发现了bug，请提出issue，我会尽快解决的~

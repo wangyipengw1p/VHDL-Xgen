@@ -1,6 +1,8 @@
 import sys
 import os
-from gen import *
+import glob
+#import os.path.join as join
+from gen import generation
 from add import *
 from top import *
 from tb import *
@@ -35,7 +37,7 @@ def pkgGen(arg):
 
 	allfile = os.listdir(filepath)
 	allfile = filter(is_not_pkg,allfile)
-	cufolder = filepath.split('/')[-1]
+	cufolder = filepath.split(os.sep)[-1]
 	if len(arg) == 0:
 		print('Info: package name not specified. Use ' + cufolder + '_pkg :)\n')
 		filename = cufolder + '_pkg'
@@ -46,66 +48,106 @@ def pkgGen(arg):
 		filename = arg.pop(0)
 	if not filename[-4:] == '.vhd':
 		filename = filename + '.vhd'
-	fullname = filepath + '/' + filename 
+	fullname = os.path.join(filepath , filename)
 	writeFrame(fullname)
-	datapath = os.environ["VHDLXGEN_PATH"] + '/data'
+	datapath = os.path.join(os.environ["VHDLXGEN_PATH"] , 'data')
 	with open(fullname, 'a') as file:
-		with open(datapath + '/pkg.vd', 'r') as f:
+		with open(os.path.join(datapath , 'pkg.vd'), 'r') as f:
 			for line in f:
 				line = line.replace('$pkg_name', filename[:-4])
 				file.write( line)
 	
 	if '-a' in arg:
 		for file in allfile:
-			with open(filepath + '/' + file, 'r') as f:
+			with open(os.path.join(filepath , file), 'r') as f:
 				dataf = f.readlines()
 			pt = findEntityHead(dataf)
 			dataf.insert(pt,'library work;\nuse work.'+filename[:-4]+'.all;\n')
-			with open(filepath + '/' + file, 'w') as f:
+			with open(os.path.join(filepath ,file), 'w') as f:
 				for line in dataf:
 					f.write(line)
 	
 
 def printInfo():
-	datapath = os.environ["VHDLXGEN_PATH"] + '/data'
-	with open(datapath + '/version.vd', 'r') as file:
+	datapath = os.path.join(os.environ["VHDLXGEN_PATH"] , 'data')
+	with open(os.path.join(datapath , 'version.vd'), 'r') as file:
 		for line in file:
 			sys.stdout.write(line)
 	
 def printHelp():	
-	datapath = os.environ["VHDLXGEN_PATH"] + '/data'
-	with open(datapath + '/help.vd', 'r') as file:
+	datapath = os.path.join(os.environ["VHDLXGEN_PATH"] , 'data')
+	with open(os.path.join(datapath , 'help.vd'), 'r') as file:
 		for line in file:
 			sys.stdout.write(line)
 	
 
-def main():
-	if len(sys.argv) < 2:
-		print("Usage: python vxgen.py <func> <args>")
+def main(arg):
+	if len(arg) == 0:
+		print("Usage: vxgen <fun> <arg>, command \'vxgen help\' for more info.")
 		exit(1)
 	if  not "VHDLXGEN_PATH" in os.environ:
 		print("Please set environment before use.\n")
 		exit(1)
-	Fun =  sys.argv[1]
+	Fun =  arg[0]
 	if Fun == 'gen':
-		generation(sys.argv[2:])
+		generation(arg[1:])
 	elif Fun == 'add':
-		addComponents(sys.argv[2:])
+		addComponents(arg[1:])
 	elif Fun == 'top':
-		topGen(sys.argv[2:])
+		topGen(arg[1:])
 	elif Fun == 'tb':
-		tbGen(sys.argv[2:])
+		tbGen(arg[1:])
 	elif Fun == 'pkg':
-		pkgGen(sys.argv[2:])
+		pkgGen(arg[1:])
 	elif Fun == 'version':
 		printInfo()
 	elif Fun == 'help':
 		printHelp()
 	else :
-		print("Usage: python vxgen.py <func> <args>")
+		print("Usage: vxgen <fun> <arg>, command \'vxgen help\' for more info.")
 		exit(1)
+
+def existonevsh():
+	filenum = 0
+	for file in os.listdir('.'):
+		if 'vsh' in file:
+			filenum += 1
+	if filenum == 1:
+		return True
+	elif filenum == 0:
+		return False
+	else:
+		print('ERROR: More than one vsh file found in current folder. Omit both.')
+		return False
+
+def genFromScript(vshpath):
+	if vshpath == '.':
+		if len(glob.glob('*.vsh')) == 0:
+			print('Can\'t find vsh file in current folder. \nFor usage: command \'vxgen help\'')
+			exit(1)
+		with open(glob.glob('*.vsh')[0], 'r') as vsh:
+			data = vsh.readlines()
+	else:
+		with open(vshpath, 'r') as vsh:
+			data = vsh.readlines()
+	for line in data:
+		if line.strip() != '':
+			print('>>> '+line)
+			arg = []
+			arg = arg + line.split(' ')
+			arg.pop(arg.index(''))
+			for i in arg:
+				arg[arg.index(i)] = i.strip()
+			main(arg)
+	print('>>> Done')
 
 
 if __name__ == '__main__':
-    main()
+	arg = sys.argv[1:]
+	if len(arg) == 1 and '.vsh' in arg[0]:
+		genFromScript(arg[0])
+	elif len(arg) ==0 and existonevsh():
+		genFromScript('.')
+	else:
+		main(arg)
 

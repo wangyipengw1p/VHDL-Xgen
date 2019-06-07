@@ -1,4 +1,7 @@
-
+from math import *
+import shutil
+import os
+#import os.path.join as join
 #-----------------------------
 #Functions:
 	# addComponents(arg)
@@ -17,9 +20,7 @@
 	# getPortPart(data)
 
 
-from math import *
-import shutil
-import os
+
 
 def findEntityHead(data):
 	'''
@@ -93,7 +94,7 @@ def addcounter(writename, countnum):
 	
 	datapt = datapt + 2		#now after 'begin', which is why 'begin' is required to be in an exclusive line
 	
-	with open(os.environ["VHDLXGEN_PATH"] + '/data/count.vd', 'r') as file:
+	with open(os.path.join(os.environ["VHDLXGEN_PATH"] , 'data','count.vd'), 'r') as file:
 		countdata = file.readlines()
 	for line in countdata:
 		#do the replacement
@@ -112,11 +113,11 @@ def addclkdiv(writefile, divnum):
 	add odd divied clk to writefile
 	'''
 	if divnum % 2 == 0:
-		sfile = os.environ["VHDLXGEN_PATH"] + '/data/sclkdiveven.vd'
-		cfile = os.environ["VHDLXGEN_PATH"] + '/data/clkdiveven.vd'
-	else:
-		sfile = os.environ["VHDLXGEN_PATH"] + '/data/sclkdivodd.vd'
-		cfile = os.environ["VHDLXGEN_PATH"] + '/data/clkdivodd.vd'
+		sfile = os.path.join(os.environ["VHDLXGEN_PATH"] , 'data','sclkdiveven.vd')
+		cfile = os.path.join(os.environ["VHDLXGEN_PATH"] , 'data','clkdiveven.vd' )
+	else:											
+		sfile = os.path.join(os.environ["VHDLXGEN_PATH"] , 'data','sclkdivodd.vd' )
+		cfile = os.path.join(os.environ["VHDLXGEN_PATH"] , 'data','clkdivodd.vd'	 )
 	divwidth = ceil(log(divnum, 2))
 	clkname = 'clk_d' + str(divnum)
 	with open(writefile, 'r') as file:
@@ -167,7 +168,7 @@ def addfsm(writefile, arg):
 	bpt = bpt + 1
 	data.insert(bpt, 'signal current_state, next_state: state_type;\n')
 	bpt = findArchBegin(data) + 1
-	with open(os.environ["VHDLXGEN_PATH"] + '/data/fsm.vd', 'r') as file: 
+	with open(os.path.join(os.environ["VHDLXGEN_PATH"] , 'data','fsm.vd'), 'r') as file: 
 		cdata = file.readlines()
 	for line in cdata:
 		data.insert(bpt, line)
@@ -190,7 +191,7 @@ def addreg(writefile, mode):
 	with open(writefile, 'r') as file:
 		data = file.readlines()
 	pt = findArchEnd(data)
-	with open(os.environ["VHDLXGEN_PATH"] + '/data/'+mode+'.vd', 'r') as file: 
+	with open(os.path.join(os.environ["VHDLXGEN_PATH"] , 'data',mode+'.vd'), 'r') as file: 
 		for line in file:
 			data.insert(pt, line)
 			pt = pt + 1
@@ -236,18 +237,19 @@ def getPorts(data):
 	for line in data:
 		line =  line.split('--',1)[0] #omit the comments
 		if  ':' in line:
-			for part in line.split(';')[:-1]:			#deal with [e.g. port( clk : in std_logic; rst: in std_logic;)]
-				names = part.split(':')[0].split(',') #deal with multiple ports in one line, [e.g. clk, rst : in std_logic;]
-				for item in names:
-					name.append(item.strip())
-				
-				str2 = part.split(':')[1]
-				if 'downto' in str2:
+			for part in line.split(';'):			#deal with [e.g. port( clk : in std_logic; rst: in std_logic;)]
+				if part.strip() != '':
+					names = part.split(':')[0].split(',') #deal with multiple ports in one line, [e.g. clk, rst : in std_logic;]
 					for item in names:
-						width.append(int(int(filter(str.isdigit,str2.split('downto')[0])) + 1))		#e.g. (7 downto 0) -->  8
-				else:
-					for item in names:
-						width.append(1)
+						name.append(item.strip())
+					
+					str2 = part.split(':')[1]
+					if 'downto' in str2:
+						for item in names:
+							width.append(int(list(filter(str.isdigit,str2.split('downto')[0]))[0]) + 1)		#e.g. (7 downto 0) -->  8
+					else:
+						for item in names:
+							width.append(1)
 	
 		
 	for i in range(len(name)):
@@ -272,7 +274,8 @@ def getSignals(data):
 			str2 = line.split(':')[1]
 			if 'downto' in str2:
 				for item in signames:
-					width.append(int(int(filter(str.isdigit,str2.split('downto')[0])) + 1))		#e.g. (7 downto 0) -->  8
+					#width.append(int(int(filter(str.isdigit,str2.split('downto')[0])) + 1))		#e.g. (7 downto 0) -->  8 #modify for py3
+					width.append(int(list(filter(str.isdigit,str2.split('downto')[0]))[0]) + 1)
 			else:
 				for item in signames:
 					width.append(1)
@@ -429,9 +432,9 @@ def addComponents(arg):
 	else:
 		filepath = os.getcwd()
 	if entityname[-4:] == '.vhd':
-		filename = filepath + '/' + entityname
+		filename = os.path.join(filepath , entityname)
 	else :
-		filename = filepath + '/' + entityname + '.vhd'
+		filename = os.path.join(filepath , entityname + '.vhd')
 	if not os.path.exists(filename):
 		writeframe(filename, entityname)
 	elif len(arg) == 0 :
@@ -471,13 +474,13 @@ def addComponents(arg):
 				for item in arg:
 					addreg(filename, item)			
 		else:
-			libpath = os.environ["VHDLXGEN_PATH"] + '/lib'
+			libpath = os.path.join(os.environ["VHDLXGEN_PATH"] , 'lib')
 			if component[:-4] == '.vhd':
-				libname = libpath + '/' + component 
-				currentname = os.getcwd() + '/' + component
+				libname = os.path.join(libpath , component)
+				currentname = os.path.join(os.getcwd() , component)
 			else :
-				libname = libpath + '/' + component + '.vhd'
-				currentname = os.getcwd() + '/' + component + '.vhd'
+				libname = os.path.join(libpath , component + '.vhd')
+				currentname = os.path.join(os.getcwd() , component + '.vhd')
 			autocon = True
 			if '-n' in arg:
 				autocon = False

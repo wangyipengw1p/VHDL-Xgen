@@ -1,5 +1,6 @@
 import sys
 import os
+#import os.path.join as join
 from gen import *
 from add import *
 
@@ -20,8 +21,8 @@ def tbGen(arg):
 	if not filename in allfile:
 		print('ERROR: ' +filename + ' not found in '+filepath)
 		exit(1)
-	fullname = filepath + '/' + filename
-	tbfullname = filepath + '/'+'tb_' + filename
+	fullname = os.path.join(filepath , filename)
+	tbfullname = os.path.join(filepath,'tb_' + filename)
 	writeFrame(tbfullname)
 	writeEntity(tbfullname, 'tb_' + filename[:-4])
 	with open(tbfullname ,'r') as file:

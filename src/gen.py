@@ -2,6 +2,7 @@ import time
 import platform
 import getpass
 import os
+#import os.path.join as join
 #-------------------------------------------
 # function:
 	# genaration(arg)
@@ -14,13 +15,13 @@ def writeFrame(writefile):
 	'''
 	Write title and libaraies.
 	'''
-	confpath = os.environ["VHDLXGEN_PATH"] + '/conf'
+	confpath = os.path.join(os.environ["VHDLXGEN_PATH"] , 'conf')
 	title = []
 	lib = []
 	with open(writefile, 'w+') as file:
 		file.write("--------------------------------------------------\n")
 		# write docu head
-		with open(confpath + '/title.conf', 'r') as f:
+		with open(os.path.join(confpath , 'title.conf'), 'r') as f:
 			for line in f:
 				line = line.strip()
 				if line[0] != '#':
@@ -46,7 +47,7 @@ def writeFrame(writefile):
 						file.write('-- '+ line+ '\n')
 		file.write("--------------------------------------------------\n\n\n\n")
 		#write library
-		with open(confpath + '/library.conf', 'r') as f:
+		with open(os.path.join(confpath , 'library.conf'), 'r') as f:
 			for line in f:
 				line = line.strip()
 				if line[0] != '#':
@@ -202,6 +203,8 @@ def addports(writefile, arg):
 
 
 
+
+
 def generation(arg):
 	'''
 	function entry for 'gen'
@@ -217,9 +220,10 @@ def generation(arg):
 		else:
 			filepath = os.getcwd()
 	if entityname[-4:] == '.vhd':
-		filename = filepath + '/' + entityname
+		filename =os.path.join( filepath , entityname)
 	else:
-		filename = filepath + '/' + entityname + '.vhd'
+		filename = os.path.join(filepath, entityname + '.vhd')
 	writeFrame(filename)
 	writeEntity(filename, entityname)
 	addports(filename,arg)
+

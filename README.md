@@ -1,6 +1,5 @@
 #### [中文版](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/CNREADME.md) 
-# VHDL-Xgen
-
+# VHDL-Xgen `v1.2`
 
 
 VHDL auto generation tool, Targetting Synchronous, Top-down design flow.
@@ -31,6 +30,7 @@ run setup_win.cmd as admin
 ```
 Done.
 > If you are using Windows 10, run `OpenCmdHere.reg` to add Windows Registry, which will add 'Open cmd here' to your right click menu
+
 Then re-open the cmd and command following to test if you've done things correctly.
 ```
 vxgen version
@@ -54,7 +54,7 @@ examples | Some example usages
 * Use `end entity <entityname>` instead of just `end <entityname>`.
 -------------------
 
-## [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)  &#160;&#160;&#160;&#160;[add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-components) &#160;&#160;&#160;&#160;[top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen)  &#160;&#160;&#160;&#160;[tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen) &#160; &#160;&#160;&#160;[pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen)  &#160;&#160;&#160;&#160;[version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
+## [gen](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#generation)  &#160;&#160;&#160;&#160;[add](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#add-code-framworks-or-components) &#160;&#160;&#160;&#160;[top](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#top-gen)  &#160;&#160;&#160;&#160;[tb](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#testbench-gen) &#160; &#160;&#160;&#160;[pkg](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#package-gen)  &#160;&#160;&#160;&#160;[version](https://github.com/wangyipengw1p/VHDL-Xgen/blob/master/README.md#version)
 
 ## Generation
 ``` 
@@ -73,7 +73,9 @@ vxgen gen test.vhd  -i clk rst -o output            # test.vhd will be generated
 vxgen gen test.txt                                  # test.txt.vhd will be generated
 vxgen gen ~/work-dir/test                           # add full path, '.vhd' can still be omitted; no ports;
 ```
-  
+
+* This tool haven't supported generate generic ports, but it's supported when adding components.(because I guess generic port declearation is easier to be added in the vhdl code than in command line)
+
 ## Add code framworks or components
 ```
 vxgen add <filename> <component> {<args>} {-f <folder>}
@@ -93,6 +95,7 @@ vxgen add <filename> <component> {<args>} {-f <folder>}
 * The auto connection will connect port(in component) with the signals or ports (in master file) with the **same name and width**. If not exist, the tool will generate signals for component. Especially if the signals or ports exists but width miss-mach, the tool will add renamed the signal like signalx, signalxx, signalxxx etc.
 * As indicated above, currently, this tool only supports `std_logic` and `std_logic_vector` for signal type. For example,  types like `record` or user defined type will be treadted as `std_logic`; Types like `unsigned(7 downto 0)` will be treated as `std_logic_vector(7 downto 0)`
 * `in` `out` is not considered while connecting the ports. (Because I think its unnecessary)
+* Adding components and auto-connection supports generic ports.
 * Only `downto` format is supported currently for port connection. 
 
 **example of usage**
@@ -180,6 +183,25 @@ args | discription
   
 Generated pkg framework named &lt;pkg_name&gt; (default "pkg"). If -a is specified, all file in the folder will add work library as will as this pkg.
 
+## Generate from VHDL-Xgen script `new`
+```
+vxgen {<vsh-path>}
+```
+
+Now you can execute multi-command written in a VHDL-Xgen batch file, with extension name **.vsh**. It can be organized like
+
+```
+gen
+gen t1 -i clk rst -o data 8 -io bus 16
+add t1 clk_div 5
+top
+tb t1
+```
+
+* If vsh-path is not specified, the tool will find it in the current folder. For this circumstance, do not place more than one vsh file in current folder.
+* `Tab` is not support in vsh file
+
+
 
 ## Version
 ```
@@ -193,4 +215,4 @@ vxgen help
 ```
 Print help message.
 
-
+> It nearly imposible to consider all circumstances when dealing with your VHDL code, but I tried to. If you find some bug, please raise an issue. Thanks.
