@@ -201,7 +201,7 @@ tb t1
 ```
 
 * If vsh-path is not specified, the tool will find it in the current folder. For this circumstance, do not place more than one vsh file in current folder.
-* `Tab` is not support in vsh file
+* `Tab` is not supported in vsh file
 
 
 
@@ -217,4 +217,4 @@ vxgen help
 ```
 Print help message.
 
-> It nearly imposible to consider all circumstances when dealing with your VHDL code, but I tried to. If you find some bug, please raise an issue. Thanks.
+> It nearly imposible to consider all circumstances when dealing with your VHDL code, but I tried and will try to. If you find some bugs, please raise an issue. Thanks.
