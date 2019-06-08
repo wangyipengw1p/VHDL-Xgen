@@ -135,7 +135,8 @@ def genFromScript(vshpath):
 			print('>>> '+line)
 			arg = []
 			arg = arg + line.split(' ')
-			arg.pop(arg.index(''))
+			if '' in arg:
+				arg.pop(arg.index(''))
 			for i in arg:
 				arg[arg.index(i)] = i.strip()
 			main(arg)
