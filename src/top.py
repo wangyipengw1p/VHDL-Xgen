@@ -38,11 +38,11 @@ def topGen(arg):
 		filename = arg.pop(0)
 		if not len(filename.split(os.sep)) == 1:
 			print('Warning: <filename> should not contain path. Use -f <folder> to change.\nWarning: <folder> using default: '+os.getcwd()+'\n')
-		if not filename[-4:] == '.vhd':
-			topname = filename[:-4]
+		if not  filename[-4:] == '.vhd':
+			topname = filename
 			filename = os.path.join(filepath , filename + '.vhd')
 		else:
-			topname = filename
+			topname = filename[:-4]
 			filename = os.path.join(filepath , filename)
 	allfile = filter(is_component, allfile)
 
