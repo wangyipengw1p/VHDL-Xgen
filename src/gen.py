@@ -23,8 +23,9 @@ def writeFrame(writefile):
 		# write docu head
 		with open(os.path.join(confpath , 'title.conf'), 'r') as f:
 			for line in f:
+				line = line.split('#',1)[0]		# omit the comment
 				line = line.strip()
-				if line[0] != '#':
+				if line != '':
 					if 'Time' in line:
 						if len(line.split(':')) == 1:
 							towrite = '-- Creat time: ' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + '\n'
@@ -49,8 +50,9 @@ def writeFrame(writefile):
 		#write library
 		with open(os.path.join(confpath , 'library.conf'), 'r') as f:
 			for line in f:
+				line = line.split('#',1)[0]		# omit the comment
 				line = line.strip()
-				if line[0] != '#':
+				if line != '':
 					file.write( line+ '\n')
 
 def writeEntity(writefile, entityname):
