@@ -1,7 +1,7 @@
 # QAM signal generation
 Example from Beijing IC Design Contest for College Student, digital track, 2019, problem C
 
-> The specific instruction of the problem of the contest will be uploaded soon
+> The specific instruction of the problem C will be uploaded soon
 
 
 See what the tool can do for you.
