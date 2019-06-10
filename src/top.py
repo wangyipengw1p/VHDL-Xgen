@@ -4,6 +4,10 @@ import os
 from gen import *
 from add import *
 
+# Functions:
+	# is_component(a)
+	# topGen(arg)
+
 
 
 def is_component(a):
@@ -11,6 +15,8 @@ def is_component(a):
 		return True
 	else:
 		return False
+
+
 def topGen(arg):
 	
 	if '-f' in arg:

@@ -5,6 +5,10 @@ from gen import *
 from add import *
 
 
+# Functions:
+	# tbGen(arg)
+	# 
+
 def tbGen(arg):
 	if len(arg) ==0:
 		print('Usage:vxgen tb <entityname> {-q <clkFrequency>} {-d <dutycycle>} {-diff} {-pr/-nr} {-rt <rst-time>}')

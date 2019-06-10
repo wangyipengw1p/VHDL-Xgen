@@ -3,13 +3,13 @@ import platform
 import getpass
 import os
 #import os.path.join as join
-#-------------------------------------------
+
 # function:
 	# genaration(arg)
-	# writeframe(writefile)		*with path
-	# writeEntity(writefile, entityname)		*must be used adjasent to writeframe
+	# writeFrame(writefile)		*with path
+	# writeEntity(writefile, entityname)		*must be used adjacent to writeframe
 	# addports(writefile, arg)
-#-------------------------------------------
+
 
 def writeFrame(writefile):
 	'''

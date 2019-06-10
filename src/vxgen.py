@@ -8,15 +8,14 @@ from top import *
 from tb import *
 
 
-
-
-
-
-
-
-# Problem:
-# 
-# 0 downto 0
+# Functions:
+	# is_not_pkg(name)
+	# pkgGen(arg)
+	# printInfo()
+	# printHelp()
+	# main(arg)
+	# existonevsh()
+	# genFromScript(vshpath)
 
 
 def is_not_pkg(name):
@@ -131,7 +130,8 @@ def genFromScript(vshpath):
 		with open(vshpath, 'r') as vsh:
 			data = vsh.readlines()
 	for line in data:
-		if line.strip() != '':
+		line = line.split('#',1)[0]		# omit the comment
+		if line.strip() != '':			# not an empty line
 			print('>>> '+line)
 			arg = []
 			arg = arg + line.split()

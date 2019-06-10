@@ -201,7 +201,7 @@ tb t1
 ```
 
 * If vsh-path is not specified, the tool will find it in the current folder. For this circumstance, do not place more than one vsh file in current folder.
-* `Tab` is not supported in vsh file
+* Comment using '#' in vsh file
 
 
 
