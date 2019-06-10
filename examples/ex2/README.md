@@ -51,6 +51,7 @@ Then console out put should be like this with no warning and no error
 >>> tb qam_TOP -q 50 -pr
 >>> Done
 ```
+The ouput vhd files will show in the path.
 
 Finally, change the connection of the clk in the `qam_TOP` file. (we need to do this because entity `m_seq_gen` needs clkd_500, `mapping` and `qam_gen` need clkd_25. But the tool can only connect them to clk)
 
