@@ -57,4 +57,4 @@ Finally, change the connection of the clk in the `qam_TOP` file. (we need to do 
 
 We notice that changing the clk connection in the generated vhd file will be easy, while describing them in shell may be difficault.
 
-The role of the tool has ended. We can focus on our core logic!
+The role of the tool has now ended. Next, we can focus on our core logic!
