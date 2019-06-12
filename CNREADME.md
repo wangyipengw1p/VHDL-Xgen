@@ -16,6 +16,7 @@ Python 文件不需要编译，但需要Python环境。主文件是 `src/vxgen.p
 ```
 cd $VHDL-Xgen-dir 
 sh setup.sh
+source ~/.bashrc
 ```
 搞定！
 
