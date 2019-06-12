@@ -15,6 +15,7 @@ For convience, command
 ```
 cd $VHDL-Xgen-dir 
 sh setup.sh
+source ~/.bashrc
 ```
 Done. 
 
