@@ -2,7 +2,7 @@
 
 `v1.2`
 
-[![build status](https://img.shields.io/badge/build-pass-brightgreen.svg)](https://img.shields.io/badge/build-pass-brightgreen.svg)
+
 [![test status](https://img.shields.io/badge/test-pass%20basic-blue.svg)](https://img.shields.io/badge/test-pass%20basic-blue.svg)
 
 VHDL 自动生成工具，面相同步电路，自顶向下流程设计。
@@ -225,4 +225,4 @@ vxgen help
 ```
 帮助信息，备忘~
 
-> 处理各种VHDL文件时，考虑到所有情况是一个几乎不可能的任务，但是我尽量去尽可能多的处理各种情况，如果您发现了bug，请提出issue，我会尽快解决的~
+
