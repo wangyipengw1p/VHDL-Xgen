@@ -219,3 +219,9 @@ vxgen help
 Print help message.
 
 > It nearly imposible to consider all circumstances when dealing with your VHDL code, but I tried and will try to. If you find some bugs, please raise an issue. Thanks.
+
+### TODO
+* Optimize clk_div_odd
+* Re-desize the folder problem
+* support `generate`
+* support `record` `attribute`
